@@ -8,4 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ApplicationTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowShowWallpaper">true</item>
+    </style>
 </resources>

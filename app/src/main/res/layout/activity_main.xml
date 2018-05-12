@@ -1,18 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.etrans.bluetooth.MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/notification_window"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:background="@drawable/top_bor">
+
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/bt_back_style" />
+
+
+            <TextView
+                android:id="@+id/tv_download_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="90dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/bt_unconnected"
+                android:textColor="#fff"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30px"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_select_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/around_slip_cur" />
+
+                <ImageView
+                    android:id="@+id/iv_select_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/around_slip_other" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_pager"
+            android:layout_below="@+id/notification_window"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+</RelativeLayout>

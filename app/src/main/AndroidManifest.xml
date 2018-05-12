@@ -7,7 +7,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/ApplicationTheme"
+        >
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -15,6 +16,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.etrans.bluetooth.ContactActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="com.etrans.bluetooth.CallogActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/Callog"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="com.etrans.bluetooth.CallActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="com.etrans.bluetooth.IncomingActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <receiver android:name="com.etrans.bluetooth.Goc.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.etrans.bluetooth.Goc.GocsdkService"></service>
+        <service android:name="com.etrans.bluetooth.Goc.PlayerService"></service>
+        <service android:name="com.etrans.bluetooth.Goc.ScoService"></service>
+
     </application>
 
 </manifest>

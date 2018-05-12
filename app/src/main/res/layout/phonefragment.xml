@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/dial_layout"
+        android:layout_width="536dp"
+        android:layout_height="469dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/img_bluetooth_dial"
+        android:gravity="center_horizontal">
+
+        <include
+            android:id="@+id/include2"
+            layout="@layout/view_dial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/iv_dial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/bt_dial_selector" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="556dp"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/dial_layout"
+        android:layout_alignTop="@+id/dial_layout"
+        android:layout_toRightOf="@id/dial_layout"
+        android:paddingTop="15dp">
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bg_dial_edit"
+            android:focusable="false"
+            android:paddingLeft="20dp"
+            android:paddingRight="60dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="#fff"
+            android:textScaleX="1.1"
+            android:textSize="40sp" />
+
+        <ImageView
+            android:id="@+id/iv_clear_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_dial_btn_del" />
+
+        <ListView
+            android:id="@+id/iv_input_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/et_phone"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:cacheColorHint="#00000000"
+            android:divider="#80FFFFFF"
+            android:dividerHeight="1px"
+            android:listSelector="@android:color/transparent"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:id="@+id/rl_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/et_phone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            >
+
+
+            <ImageView
+                android:id="@+id/imgview_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/ic_dial_head_small_default3"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="65dp"
+                android:background="@drawable/selector_bluetooth_contact"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv_callog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/selector_bluetooth_calllog"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv_ref_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="65dp"
+                android:background="@drawable/selector_bluetooth_load"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
