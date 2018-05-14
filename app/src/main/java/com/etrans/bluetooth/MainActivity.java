@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -25,7 +26,8 @@ import com.etrans.bluetooth.Goc.GocsdkCallbackImp;
 import com.etrans.bluetooth.Goc.GocsdkService;
 import com.etrans.bluetooth.Goc.PlayerService;
 import com.etrans.bluetooth.bean.Phonebook;
-import com.etrans.bluetooth.db.GocDatabase;
+import com.etrans.bluetooth.db.Database;
+import com.etrans.bluetooth.domain.ContactInfo;
 import com.goodocom.gocsdk.IGocsdkService;
 
 import java.util.ArrayList;
@@ -93,8 +95,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     // 更改联系人个数
                     tv_download_count.setText("正在更新联系人： " + contacts.size());
 //                    simpleAdapter.notifyDataSetChanged();
+                    if (systemDb != null) {
+                        Database.createTable(systemDb, Database.Sql_create_phonebook_tab);
+                        Database.insert_phonebook(systemDb,
+                                Database.PhoneBookTable, phonebook.name,
+                                phonebook.num);
+                    }
 
-                    GocDatabase.getDefault().insertPhonebook(phonebook.name, phonebook.num);
+//                    GocDatabase.getDefault().insertPhonebook(phonebook.name, phonebook.num);
                     break;
                 case MSG_PHONE_BOOK_DONE:
                     Log.i("stateNK","OK");//电话本下载完成
@@ -128,10 +136,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ImageView mSelect2;
     private TextView tv_download_count;
     private List<Map<String, String>> contacts = new ArrayList<Map<String, String>>();
-
-
-
-
+    private SQLiteDatabase systemDb;
 
 
 
@@ -153,10 +158,46 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         callback = new GocsdkCallbackImp();
         hand = handler;
 ////////////////////////////////////////////////////////////////////////////////////////////////
+        InitData();
         initView();
         initListener();
 
 
+    }
+
+    private void InitData() {
+        systemDb = Database.getSystemDb();
+        if (GocsdkCallbackImp.hfpStatus > 0) {
+            reflashContactsData();
+        } else {
+            List<ContactInfo> contactInfos = Database.queryAllContact(systemDb);
+            Map<String, String> map = null;
+            for (int i = 0; i < contactInfos.size(); i++) {
+                ContactInfo contactInfo = contactInfos.get(i);
+                map = new HashMap<String, String>();
+                map.put("itemName", contactInfo.name);
+                map.put("itemNum", contactInfo.number);
+                contacts.add(map);
+            }
+        }
+    }
+
+    private void reflashContactsData() {
+        try {
+            Handler mainActivityHandler = MainActivity.getHandler();
+            if (mainActivityHandler == null) {
+                return;
+            }
+            mainActivityHandler.sendEmptyMessage(MainActivity.MSG_UPDATE_PHONEBOOK);
+            // 判断联系人列表是否为空，不为空时清空它。
+            if (contacts.isEmpty() == false) {
+                contacts.clear();
+            }
+            // 联系人列表下载
+            MainActivity.getService().phoneBookStartUpdate();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initView() {
@@ -302,6 +343,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
 
     @Override
     protected void onDestroy() {

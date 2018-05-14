@@ -1,6 +1,7 @@
 package com.etrans.bluetooth.Fragment;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -20,7 +21,8 @@ import com.etrans.bluetooth.CallogActivity;
 import com.etrans.bluetooth.ContactActivity;
 import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.R;
-import com.etrans.bluetooth.db.GocDatabase;
+import com.etrans.bluetooth.db.Database;
+import com.etrans.bluetooth.utils.ToastFactory;
 
 
 public class PhoneFragment extends Fragment implements View.OnClickListener{
@@ -44,6 +46,7 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
     EditText mEtPhone;
     ImageView mIvClearNum,iv_contact,iv_ref_contact,iv_callog;
     Button mIvDial;
+    private SQLiteDatabase systemDb;
 
 
 
@@ -73,7 +76,7 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
         initView();
         initListener();
         hand = handler;
-
+        systemDb = Database.getSystemDb();
         return mview;
     }
 
@@ -200,7 +203,8 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
                     }
                     mainActivityHandler.sendEmptyMessage(MainActivity.MSG_UPDATE_PHONEBOOK);
 
-                    GocDatabase.getDefault().clearPhonebook();
+//                    GocDatabase.getDefault().clearPhonebook();
+                    Database.delete_table_data(systemDb,Database.PhoneBookTable);
                     // 联系人列表下载
                     MainActivity.getService().phoneBookStartUpdate();
                 } catch (RemoteException e) {
@@ -209,17 +213,17 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
 
                 break;
             case R.id.iv_dial:
+//			if (GocsdkCallbackImp.hfpStatus > 0) {
+                String phoneNumber = mEtPhone.getText().toString().trim();
+                if (TextUtils.isEmpty(phoneNumber)) {
+                    ToastFactory.showToast(activity,"请输入电话号码");
+                } else {
+                    callOut(phoneNumber);
+                }
+//			} else {
+//				Toast.makeText(activity, "请您先连接设备", Toast.LENGTH_SHORT).show();
+//			}
 
-//                if (GocsdkCallbackImp.hfpStatus >= 3) {
-                String number = mEtPhone.getText().toString().trim();
-//                    if (TextUtils.isEmpty(number)) {
-//                        ToastFactory.showToast(getApplicationContext(), "请输入电话号码");
-//                    } else {
-                placeCall(number);
-//                    }
-//                } else {
-//                    ToastFactory.showToast(getApplicationContext(), "请您先连接设备");
-//                }
 
                 break;
         }
@@ -242,18 +246,25 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    // 拨打正确的电话
-    private static void placeCall(String number) {
-        if (number.length() == 0) return;
-        if (MainActivity.getService() == null) return;
 
-        if (PhoneNumberUtils.isGlobalPhoneNumber(number)) {
-            Log.d("GocApp", "isGlobalPhoneNumber 1: " + number);
-            if (number == null || !TextUtils.isGraphic(number)) {
+    private void callOut(String phoneNumber2) {
+        placeCall(phoneNumber2);
+    }
+
+
+
+    // 拨打正确的电话
+    private static void placeCall(String mLastNumber) {
+        if (mLastNumber.length() == 0)
+            return;
+        if (PhoneNumberUtils.isGlobalPhoneNumber(mLastNumber)) {
+            // place the call if it is a valid number
+            if (mLastNumber == null || !TextUtils.isGraphic(mLastNumber)) {
+                // There is no number entered.
                 return;
             }
             try {
-                MainActivity.getService().phoneDail(number);
+                MainActivity.getService().phoneDail(mLastNumber);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

@@ -75,23 +75,7 @@ public class CallogActivity extends Activity implements View.OnClickListener{
 
                     Map<String, String> map = null;
                     switch (info.type) {
-                        case 4: {
-                            if (call_log_out.size() <= 100) {
-                                map = new HashMap<String, String>();
-                                String name = null;
-                                if (TextUtils.isEmpty(info.name)) {
-                                    name = "未知号码";
-                                } else {
-                                    name = info.name;
-                                }
-                                map.put("itemName", name);
-                                map.put("itemNum", info.number);
-                                call_log_out.add(map);
-                                mSimpleAdapterOut.notifyDataSetChanged();
-                            }
-                            break;
-                        }
-                        case 6: {
+                        case 4: { //未接来电
                             if (call_log_miss.size() <= 100) {
                                 map = new HashMap<String, String>();
                                 String name = null;
@@ -107,7 +91,23 @@ public class CallogActivity extends Activity implements View.OnClickListener{
                             }
                             break;
                         }
-                        case 5: {
+                        case 3: { //去电
+                            if (call_log_out.size() <= 100) {
+                                map = new HashMap<String, String>();
+                                String name = null;
+                                if (TextUtils.isEmpty(info.name)) {
+                                    name = "未知号码";
+                                } else {
+                                    name = info.name;
+                                }
+                                map.put("itemName", name);
+                                map.put("itemNum", info.number);
+                                call_log_out.add(map);
+                                mSimpleAdapterOut.notifyDataSetChanged();
+                            }
+                            break;
+                        }
+                        case 5: { //来电
                             if (call_log_in.size() <= 100) {
                                 map = new HashMap<String, String>();
                                 String name = null;
@@ -313,9 +313,9 @@ public class CallogActivity extends Activity implements View.OnClickListener{
         }
     }
 
-    private void LoadMissedData() {
-        if (GocsdkCallbackImp.hfpStatus >= 3) {
-            if (call_log_miss.size() == 0) {
+    private void LoadMissedData() { //未知来电
+//        if (GocsdkCallbackImp.hfpStatus >= 3) {
+//            if (call_log_miss.size() == 0) {
                 rl_downloading.setVisibility(View.VISIBLE);
                 vp_content.setVisibility(View.GONE);
                 if (mainHandler != null) {
@@ -328,13 +328,13 @@ public class CallogActivity extends Activity implements View.OnClickListener{
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-            }
-        }
+//            }
+//        }
     }
 
-    private void LoadCalloutData() {
-        if (GocsdkCallbackImp.hfpStatus >= 3) {
-            if (call_log_out.size() == 0) {
+    private void LoadCalloutData() { //去电
+//        if (GocsdkCallbackImp.hfpStatus >= 3) {
+//            if (call_log_out.size() == 0) {
                 rl_downloading.setVisibility(View.VISIBLE);
                 vp_content.setVisibility(View.GONE);
                 if (mainHandler != null) {
@@ -347,14 +347,14 @@ public class CallogActivity extends Activity implements View.OnClickListener{
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-            }
-        }
+//            }
+//        }
     }
 
-    private void LoadIncomingData() {
+    private void LoadIncomingData() { //来电
 
 
-        if (call_log_in.size() == 0) {
+//        if (call_log_in.size() == 0) {
             rl_downloading.setVisibility(View.VISIBLE);
             vp_content.setVisibility(View.GONE);
             mainHandler = MainActivity.getHandler();
@@ -365,7 +365,7 @@ public class CallogActivity extends Activity implements View.OnClickListener{
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-        }
+//        }
     }
 
     private class MyPagerAdapter extends PagerAdapter {

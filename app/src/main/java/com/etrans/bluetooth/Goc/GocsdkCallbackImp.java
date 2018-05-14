@@ -5,8 +5,13 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.etrans.bluetooth.CallActivity;
+import com.etrans.bluetooth.CallogActivity;
+import com.etrans.bluetooth.InComingActivity;
 import com.etrans.bluetooth.MainActivity;
+import com.etrans.bluetooth.app.Myapplication;
 import com.etrans.bluetooth.bean.Phonebook;
+import com.etrans.bluetooth.domain.CallLogInfo;
 import com.etrans.bluetooth.event.A2dpStatusEvent;
 import com.etrans.bluetooth.event.MusicInfoEvent;
 import com.goodocom.gocsdk.IGocsdkCallback;
@@ -65,9 +70,9 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 	@Override
 	public void onIncoming(String number) throws RemoteException {
 		
-//		Handler handler1 = MainActivity.getHandler();
-//		handler1.sendMessage(handler1.obtainMessage(MainActivity.MSG_COMING,
-//				number));
+		Handler handler1 = Myapplication.getHandler();
+		handler1.sendMessage(handler1.obtainMessage(Myapplication.MSG_COMING,
+				number));
 		GocsdkCallbackImp.number = number;
 		GocsdkCallbackImp.hfpStatus = 4;
 
@@ -75,26 +80,30 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 
 	@Override
 	public void onHangUp() throws RemoteException {
-//		Handler handler2 = InComingActivity.getHandler();
-//		if(handler2!=null){
-//			handler2.sendEmptyMessage(InComingActivity.MSG_INCOMINNG_HANGUP);
-//		}
-//		Handler handler = CallActivity.getHandler();
-//		if(handler == null){
-//			return;
-//		}
-//		handler.sendEmptyMessage(CallActivity.MSG_INCOMING_HANGUP);
+
+		Log.i("stateNKGocsdkCallback","onHangUp");
+
+
+		Handler handler2 = InComingActivity.getHandler();
+		if(handler2!=null){
+			handler2.sendEmptyMessage(InComingActivity.MSG_INCOMINNG_HANGUP);
+		}
+		Handler handler = CallActivity.getHandler();
+		if(handler == null){
+			return;
+		}
+		handler.sendEmptyMessage(CallActivity.MSG_INCOMING_HANGUP);
 		GocsdkCallbackImp.hfpStatus = 7;
 	}
 
 	@Override
 	public void onTalking(String str) throws RemoteException {
 		System.out.println("接通了");
-//		Handler handler = MainActivity.getHandler();
-//		if(handler==null){
-//			return;
-//		}
-//		handler.sendEmptyMessage(MainActivity.MSG_TALKING);
+		Handler handler = Myapplication.getHandler();
+		if(handler==null){
+			return;
+		}
+		handler.sendEmptyMessage(Myapplication.MSG_TALKING);
 		GocsdkCallbackImp.hfpStatus = 6;
 
 	}
@@ -354,6 +363,18 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 	@Override
 	public void onCalllog(int type, String name, String number)
 			throws RemoteException {
+		Handler handler = CallogActivity.getHandler();
+		if (handler == null) {
+			return;
+		}
+		CallLogInfo info = new CallLogInfo();
+		info.number = number;
+		info.type = type;
+		info.name = name;
+		Message msg = new Message();
+		msg.obj = info;
+		msg.what = CallogActivity.MSG_CALLLOG;
+		handler.sendMessage(msg);
 //		Handler handler = FragmentCallog.getHandler();
 //		if (handler == null) {
 //			return;
@@ -414,12 +435,12 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 	@Override
 	public void onOutGoingOrTalkingNumber(String number) throws RemoteException {
 
-//		Handler handler = MainActivity.getHandler();
-//		Message msg = new Message();
-//		msg.obj = number;
-//		System.out.println("onCallSucceed---" + number);
-//		msg.what = MainActivity.MSG_OUTGONG;
-//		handler.sendMessage(msg);
+		Handler handler = Myapplication.getHandler();
+		Message msg = new Message();
+		msg.obj = number;
+		System.out.println("onCallSucceed---" + number);
+		msg.what = Myapplication.MSG_OUTGONG;
+		handler.sendMessage(msg);
 	}
 
 	@Override
@@ -469,6 +490,7 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 	@Override
 	public void onMusicInfo(String name, String artist, int duration, int pos,
                             int total) throws RemoteException {
+		Log.i("stateNK_GocsdkCallback","歌名="+name+",歌手="+artist);
 		EventBus.getDefault().post(
 				new MusicInfoEvent(name, artist, duration, pos, total));
 	}

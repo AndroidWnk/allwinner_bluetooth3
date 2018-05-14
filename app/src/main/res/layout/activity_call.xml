@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/beijing"
-    android:gravity="center_horizontal" >
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
 
     <FrameLayout
-        android:id="@+id/fl_callinfo"
+        android:id="@+id/rl_callinfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" >
+        android:layout_height="0dp"
+        android:layout_weight="2" >
 
         <RelativeLayout
-            android:id="@+id/rl_call_page"
+            android:id="@+id/rl_call_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible" >
@@ -22,34 +23,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="@string/in_calling"
+                android:text="正在呼叫..."
                 android:textColor="#fff"
                 android:textSize="20sp" />
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/tv_call_people_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_callstatus"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:id="@+id/tv_call_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#fff"
-                    android:textSize="23sp" />
-                <TextView
-                    android:id="@+id/tv_call_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#fff"
-                    android:textSize="23sp" />
-            </LinearLayout>
+                android:textColor="#fff"
+                android:textSize="23sp"  />
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_talking_page"
+            android:id="@+id/rl_connect"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" >
@@ -64,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/is_talking"
+                    android:text="正在通话："
                     android:textColor="#fff"
                     android:textSize="20sp" />
 
@@ -77,79 +67,29 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_connection_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_statusandtime"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal" 
-                android:gravity="center_horizontal">
-                <TextView 
-                    android:id="@+id/tv_connection_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:textColor="#fff"
-                    android:textSize="23sp"
-                    android:layout_marginRight="10dp"/>
-                <TextView
-                    android:id="@+id/tv_connection_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:textColor="#fff"
-                    android:textSize="23sp" />
-            </LinearLayout>
+                android:textColor="#fff"
+                android:textSize="23sp" />
         </RelativeLayout>
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/ll_action"
+        android:id="@+id/ll_number"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/iv_number"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/btn_jianpan_selector" />
-
-        <ImageView
-            android:id="@+id/iv_guaduan"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/btn_jianpan_guaduan_selector" />
-
-        <ImageView
-            android:id="@+id/iv_qieshengdao"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/btn_jianpan_qieshengdao_selector" />
-
-        <ImageView
-            android:id="@+id/iv_bujingyin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/btn_jianpan_bujingyin_selector" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_numpad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fl_callinfo"
-        android:layout_above="@id/ll_action"
+        android:layout_height="0dp"
+        android:layout_weight="4"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
+        android:paddingLeft="150dp"
+        android:paddingRight="150dp"
         android:paddingTop="10dp"
-        android:visibility="gone" >
+        android:paddingBottom="10dp"
+        android:visibility="invisible" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -183,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/iv_four"
@@ -264,4 +204,40 @@
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_action"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/iv_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/btn_jianpan_selector" />
+
+        <ImageView
+            android:id="@+id/iv_guaduan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/btn_jianpan_guaduan_selector" />
+
+        <ImageView
+            android:id="@+id/iv_qieshengdao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/btn_jianpan_qieshengdao_selector" />
+
+        <ImageView
+            android:id="@+id/iv_bujingyin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/btn_jianpan_bujingyin_selector" />
+    </LinearLayout>
+
+</LinearLayout>

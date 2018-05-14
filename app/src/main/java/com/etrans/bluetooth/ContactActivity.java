@@ -2,6 +2,7 @@ package com.etrans.bluetooth;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 import com.etrans.bluetooth.View.SideBar;
 import com.etrans.bluetooth.adapter.SortAdapter;
 import com.etrans.bluetooth.bean.Phonebook;
-import com.etrans.bluetooth.db.GocDatabase;
+import com.etrans.bluetooth.db.Database;
 import com.etrans.bluetooth.domain.ContactInfos;
 import com.etrans.bluetooth.utils.CharacterParser;
 import com.etrans.bluetooth.utils.PinyinComparator;
@@ -48,7 +49,7 @@ public class ContactActivity extends Activity implements View.OnClickListener{
      */
     private PinyinComparator pinyinComparator;
     private List<ContactInfos> mLstContact;
-
+    private SQLiteDatabase systemDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +104,9 @@ public class ContactActivity extends Activity implements View.OnClickListener{
         }
 
 //        mLstContact = (ArrayList<Phonebook>) Phonebook.mocks(this);
-        List<ContactInfos> contactInfos = GocDatabase.getDefault().getAllPhonebooks();
+//        List<ContactInfos> contactInfos = GocDatabase.getDefault().getAllPhonebooks();
+        systemDb = Database.getSystemDb();
+        List<ContactInfos> contactInfos = Database.queryAllContacts(systemDb);
         mLstContact = filledData3(contactInfos);
 
         // 根据a-z进行排序源数据

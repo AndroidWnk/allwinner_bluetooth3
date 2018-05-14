@@ -1,11 +1,13 @@
 package com.etrans.bluetooth.Goc;
 
 import android.content.Context;
+import android.os.Handler;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.etrans.bluetooth.TransparentActivity;
 import com.goodocom.gocsdk.IGocsdkCallback;
 
 public class CommandParser extends GocsdkCommon {
@@ -15,7 +17,7 @@ public class CommandParser extends GocsdkCommon {
 	private Context mContext;
 	private static boolean fromBehind = false;
 	public CommandParser(RemoteCallbackList<IGocsdkCallback> callbacks,
-                         GocsdkService gocsdkService) {
+						 GocsdkService gocsdkService) {
 		this.callbacks = callbacks;
 		mContext = gocsdkService;
 	}
@@ -24,7 +26,7 @@ public class CommandParser extends GocsdkCommon {
 	private void onSerialCommand(String cmd) {
 		System.out.println("接收到命令：" + cmd);
 		if (GocsdkService.isBehind) {
-			
+
 			System.out.println("从后台");
 //			if (cmd.startsWith(Commands.IND_INCOMING)) {// 来电
 //				fromBehind = true;
@@ -63,7 +65,7 @@ public class CommandParser extends GocsdkCommon {
 					} else if (cmd.startsWith(Commands.IND_HFP_DISCONNECTED)) {// HFP已断开:::IA
 						cbk.onHfpDisconnected();
 					} else if (cmd.startsWith(Commands.IND_CALL_SUCCEED)) {// 去电:::IC[numberlen:2][number]
-						
+
 						if (cmd.length() < 4) {
 							cbk.onCallSucceed("");
 						} else {
@@ -78,32 +80,32 @@ public class CommandParser extends GocsdkCommon {
 						}
 					} else if (cmd.startsWith(Commands.IND_HANG_UP)) {// 挂机:::IF[numberlen:2][number]
 						System.out.println("挂断命令"+cmd+"fromBehind="+fromBehind);
-//						if(fromBehind){
-//							Handler handler = TransparentActivity.getHandler();
-//							if(handler!=null){
-//								handler.sendEmptyMessage(TransparentActivity.MSG_HANGUP_PHONE);
-//								System.out.println("挂断命令发了没有哇");
-//							}
-//						}else{
-//							cbk.onHangUp();
-//						}
-//						fromBehind =false;
-						
+						if(fromBehind){
+							Handler handler = TransparentActivity.getHandler();
+							if(handler!=null){
+								handler.sendEmptyMessage(TransparentActivity.MSG_HANGUP_PHONE);
+								System.out.println("挂断命令发了没有哇");
+							}
+						}else{
+							cbk.onHangUp();
+						}
+						fromBehind =false;
+
 					} else if (cmd.startsWith(Commands.IND_TALKING)) {// 通话中:::IG[numberlen:2][number]
 						System.out.println("通话命令=" + cmd);
-						
-//						if(fromBehind){
-//							Handler handler = TransparentActivity.getHandler();
-//							if(handler!=null){
-//								handler.sendEmptyMessage(TransparentActivity.MSG_CONNECTION_PHONE);
-//							}
-//						}else{
-//							if (cmd.length() < 4) {
-//								cbk.onTalking("");
-//							} else {
-//								cbk.onTalking(cmd.substring(4));
-//							}
-//						}
+
+						if(fromBehind){
+							Handler handler = TransparentActivity.getHandler();
+							if(handler!=null){
+								handler.sendEmptyMessage(TransparentActivity.MSG_CONNECTION_PHONE);
+							}
+						}else{
+							if (cmd.length() < 4) {
+								cbk.onTalking("");
+							} else {
+								cbk.onTalking(cmd.substring(4));
+							}
+						}
 					} else if (cmd.startsWith(Commands.IND_RING_START)) {// 开始响铃
 						cbk.onRingStart();
 					} else if (cmd.startsWith(Commands.IND_RING_STOP)) {// 停止响铃
@@ -302,13 +304,17 @@ public class CommandParser extends GocsdkCommon {
 						} else {
 							String info = cmd.substring(2);
 							String[] arr = info.split("\\[FF\\]");
-							if (arr.length != 5) {
-								// Log.e(TAG, cmd+"===error");
-							} else {
-								cbk.onMusicInfo(arr[0], arr[1],
-										Integer.parseInt(arr[2]),
-										Integer.parseInt(arr[3]),
+							Log.i("stateNK","节点数量="+arr.length);
+							if (arr.length == 5) {
+								cbk.onMusicInfo(arr[0], arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]),
 										Integer.parseInt(arr[4]));
+
+							} else if (arr.length == 6) {
+								cbk.onMusicInfo(arr[0], arr[1],Integer.parseInt(arr[3]), Integer.parseInt(arr[4]),
+										Integer.parseInt(arr[5]));
+								Log.i("stateNK_CommandParser","歌名="+arr[0]+",歌手="+arr[1]);
+							} else {
+								Log.e(TAG, cmd + "===error");
 							}
 						}
 					} else if (cmd.startsWith(Commands.IND_PROFILE_ENABLED)) {
