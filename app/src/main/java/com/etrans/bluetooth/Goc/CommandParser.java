@@ -1,6 +1,8 @@
 package com.etrans.bluetooth.Goc;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
@@ -28,30 +30,30 @@ public class CommandParser extends GocsdkCommon {
 		if (GocsdkService.isBehind) {
 
 			System.out.println("从后台");
-//			if (cmd.startsWith(Commands.IND_INCOMING)) {// 来电
-//				fromBehind = true;
-//				Intent intent = new Intent();
-//				intent.setComponent(new ComponentName(
-//						"com.com.goodocom.gocsdkfinal",
-//						"com.com.goodocom.gocsdkfinal.activity.TransparentActivity"));
-//				intent.putExtra("isInComing", true);
-//				intent.putExtra("inComingNumber", cmd.substring(2));
-//				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-//						| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-//				mContext.startActivity(intent);
-//
-//			} else if (cmd.startsWith(Commands.IND_OUTGOING_TALKING_NUMBER)) {// 拨出
-//				fromBehind = true;
-//				Intent intent = new Intent();
-//				intent.setComponent(new ComponentName(
-//						"com.com.goodocom.gocsdkfinal",
-//						"com.com.goodocom.gocsdkfinal.activity.TransparentActivity"));
-//				intent.putExtra("isInComing", false);
-//				intent.putExtra("callOutNumber", cmd.substring(2));
-//				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-//						| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-//				mContext.startActivity(intent);
-//			}
+			if (cmd.startsWith(Commands.IND_INCOMING)) {// 来电
+				fromBehind = true;
+				Intent intent = new Intent();
+				intent.setComponent(new ComponentName(
+						"com.etrans.bluetooth",
+						"com.etrans.bluetooth.TransparentActivity"));
+				intent.putExtra("isInComing", true);
+				intent.putExtra("inComingNumber", cmd.substring(2));
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+						| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+				mContext.startActivity(intent);
+
+			} else if (cmd.startsWith(Commands.IND_OUTGOING_TALKING_NUMBER)) {// 拨出
+				fromBehind = true;
+				Intent intent = new Intent();
+				intent.setComponent(new ComponentName(
+						"com.etrans.bluetooth",
+						"com.etrans.bluetooth.TransparentActivity"));
+				intent.putExtra("isInComing", false);
+				intent.putExtra("callOutNumber", cmd.substring(2));
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+						| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+				mContext.startActivity(intent);
+			}
 		} else {
 			System.out.println("从前台");
 			int i = callbacks.beginBroadcast();
@@ -348,6 +350,7 @@ public class CommandParser extends GocsdkCommon {
 					} else if (cmd.startsWith(Commands.IND_MESSAGE_TEXT)) {
 						cbk.onMessageContent(cmd.substring(2));
 					} else if (cmd.startsWith(Commands.IND_OK)) {
+						Log.i("stateNK","为什么在这里");
 						// TODO:OK ind
 					} else if (cmd.startsWith(Commands.IND_ERROR)) {
 

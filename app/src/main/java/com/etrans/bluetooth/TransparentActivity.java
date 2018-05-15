@@ -104,7 +104,7 @@ public class TransparentActivity extends Activity implements OnClickListener {
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+		protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.notallhas);
 		System.out.println("透明的你肯定执行了");

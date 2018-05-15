@@ -132,19 +132,12 @@ public class CallActivity extends Activity implements OnClickListener {
 		}
 	}
 
-
-
-
-
 	protected void callOut(String phoneNumber) {
 		placeCall(phoneNumber);
 		rl_call_pager.setVisibility(View.VISIBLE);
 		rl_connect.setVisibility(View.GONE);
 		tv_call_people_name.setText(phoneNumber);
 	}
-
-
-
 
 
 	protected void callConnect(String callNumber2) {

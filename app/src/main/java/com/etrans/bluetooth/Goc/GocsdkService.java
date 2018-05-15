@@ -9,13 +9,13 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.RemoteCallbackList;
 
+import com.goodocom.gocsdk.IGocsdkCallback;
+import com.goodocom.gocsdk.SerialPort;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import com.goodocom.gocsdk.IGocsdkCallback;
-import com.goodocom.gocsdk.SerialPort;
 
 
 public class GocsdkService extends Service {
@@ -80,6 +80,7 @@ public class GocsdkService extends Service {
 		System.out.println("服务绑定了");
 		isBehind = false;
 		return new GocsdkServiceImp(this);
+
 	}
 	@Override
 	public boolean onUnbind(Intent intent) {

@@ -10,8 +10,8 @@ public class BootReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		System.out.println("接收到开机启动广播了！");
-//		Intent service = new Intent(context,GocsdkService.class);
-//		context.startService(service);
+		Intent service = new Intent(context,GocsdkService.class);
+		context.startService(service);
 		/*
 		service = new Intent(context,PlayerService.class);
 		context.startService(service);*/

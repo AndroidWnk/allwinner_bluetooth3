@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.etrans.bluetooth.CallActivity;
 import com.etrans.bluetooth.CallogActivity;
+import com.etrans.bluetooth.InComingActivity;
 import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.app.Myapplication;
 import com.etrans.bluetooth.bean.Phonebook;
