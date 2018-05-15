@@ -33,10 +33,6 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:name="com.etrans.bluetooth.InComingActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
             android:name="com.etrans.bluetooth.TransparentActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />

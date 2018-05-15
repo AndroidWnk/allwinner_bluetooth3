@@ -11,7 +11,6 @@ import android.text.TextUtils;
 
 import com.etrans.bluetooth.CallActivity;
 import com.etrans.bluetooth.Goc.BlueToothInfo;
-import com.etrans.bluetooth.InComingActivity;
 import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.db.Database;
 
