@@ -87,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="未知来电"
+                        android:text="未接来电"
                         android:textColor="@color/blue"
                         android:textSize="25dp" />
                 </FrameLayout>
