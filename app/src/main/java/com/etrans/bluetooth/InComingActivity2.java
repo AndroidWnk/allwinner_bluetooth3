@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class InComingActivity extends Activity implements OnClickListener {
+public class InComingActivity2 extends Activity implements OnClickListener {
     public static final int MSG_INCOMINNG_HANGUP = 0;
     public static final int MSG_INCOMING_CONNECTION = 1;
 
@@ -46,7 +46,7 @@ public class InComingActivity extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_incoming);
+        setContentView(R.layout.activity_incoming2);
 
         Intent intent = getIntent();
         incomingNumber = intent.getStringExtra("incomingNumber");

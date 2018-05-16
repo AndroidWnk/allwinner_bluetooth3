@@ -44,10 +44,10 @@ public class CallActivity extends Activity implements OnClickListener {
 	private boolean volume_flag = false;
 	private boolean isMute = false;
 	private boolean isConnect = false;
-	
+
 	private String callNumber;//前台拨号
 	//private String calloutNumber;//后台拨号
-	
+
 	private static Handler hand = null;
 	private Handler handler = new Handler() {
 		private String phoneNumber;
@@ -94,7 +94,7 @@ public class CallActivity extends Activity implements OnClickListener {
 	public static Handler getHandler() {
 		return hand;
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -118,7 +118,7 @@ public class CallActivity extends Activity implements OnClickListener {
 			chronometer.setFormat("%s");
 			chronometer.setBase(SystemClock.elapsedRealtime());// 复位键
 			chronometer.start();
-			
+
 		}else{
 			rl_call_pager.setVisibility(View.VISIBLE);
 			rl_connect.setVisibility(View.GONE);
@@ -143,9 +143,9 @@ public class CallActivity extends Activity implements OnClickListener {
 	protected void callConnect(String callNumber2) {
 		rl_call_pager.setVisibility(View.GONE);
 		rl_connect.setVisibility(View.VISIBLE);
-		
+
 		tv_connection_info.setText(callNumber2);
-		
+
 		chronometer.setFormat("%s");
 		chronometer.setBase(SystemClock.elapsedRealtime());// 复位键
 		chronometer.start();
@@ -180,16 +180,16 @@ public class CallActivity extends Activity implements OnClickListener {
 		rl_connect = (RelativeLayout) findViewById(R.id.rl_connect);
 		chronometer = (Chronometer) findViewById(R.id.chronometer);
 		tv_connection_info = (TextView) findViewById(R.id.tv_connection_info);
-		
-		
+
+
 		ll_number = (LinearLayout) findViewById(R.id.ll_number);
 
 		iv_number = (ImageView) findViewById(R.id.iv_number);
 		iv_guaduan = (ImageView) findViewById(R.id.iv_guaduan);
 		iv_qieshengdao = (ImageView) findViewById(R.id.iv_qieshengdao);
 		iv_bujingyin = (ImageView) findViewById(R.id.iv_bujingyin);
-		
-		
+
+
 		iv_one = (ImageView) findViewById(R.id.iv_one);
 		iv_two = (ImageView) findViewById(R.id.iv_two);
 		iv_three = (ImageView) findViewById(R.id.iv_three);
@@ -202,8 +202,8 @@ public class CallActivity extends Activity implements OnClickListener {
 		iv_xinghao = (ImageView) findViewById(R.id.iv_xinghao);
 		iv_zero = (ImageView) findViewById(R.id.iv_zero);
 		iv_jinghao = (ImageView) findViewById(R.id.iv_jinghao);
-		
-		
+
+
 		iv_one.setOnClickListener(this);
 		iv_two.setOnClickListener(this);
 		iv_three.setOnClickListener(this);
@@ -226,7 +226,7 @@ public class CallActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.iv_number: 
+		case R.id.iv_number:
 			showNumber();
 			break;
 		case R.id.iv_guaduan:
@@ -311,16 +311,16 @@ public class CallActivity extends Activity implements OnClickListener {
 
 	// 挂断
 	private void hangUp() {
-		
+
 		//Toast.makeText(this, "挂断", 0).show();
 		try {
 			MainActivity.getService().phoneHangUp();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	// 拨打正确的电话
 		private static void placeCall(String mLastNumber) {
 			if (mLastNumber.length() == 0)
