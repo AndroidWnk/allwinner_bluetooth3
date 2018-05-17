@@ -46,7 +46,7 @@ public class InComingActivity extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_incoming);
+        setContentView(R.layout.activity_incoming2);
 
         Intent intent = getIntent();
         incomingNumber = intent.getStringExtra("incomingNumber");
@@ -95,7 +95,7 @@ public class InComingActivity extends Activity implements OnClickListener {
         Intent intent = new Intent();
         intent.setComponent(new ComponentName(
                 "com.etrans.bluetooth",
-                "com.etrans.bluetooth.CallActivity2"));
+                "com.etrans.bluetooth.CallActivity"));
         intent.putExtra("incomingNumber", incomingNumber2);
         intent.putExtra("isConnect", true);
         startActivity(intent);

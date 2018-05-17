@@ -150,10 +150,10 @@ public class CommandParser extends GocsdkCommon {
 							cbk.onCurrentName(cmd.substring(2));
 						}
 					} else if (cmd.startsWith(Commands.IND_AV_STATUS)) {
-						if (cmd.length() < 4) {
+						if (cmd.length() < 3) {
 							// Log.e(TAG, cmd + "=====error");
 						} else {
-							cbk.onAvStatus(Integer.parseInt(cmd.substring(3, 4)));
+							cbk.onAvStatus(Integer.parseInt(cmd.substring(2, 3)));
 						}
 					} else if (cmd.startsWith(Commands.IND_HFP_STATUS)) {
 						System.out.println("蓝牙状态命令=" + cmd);

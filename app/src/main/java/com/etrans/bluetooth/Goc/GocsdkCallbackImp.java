@@ -5,9 +5,9 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.etrans.bluetooth.CallActivity2;
+import com.etrans.bluetooth.CallActivity;
 import com.etrans.bluetooth.CallogActivity;
-import com.etrans.bluetooth.InComingActivity2;
+import com.etrans.bluetooth.InComingActivity;
 import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.app.Myapplication;
 import com.etrans.bluetooth.bean.Phonebook;
@@ -46,6 +46,7 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 //			return;
 //		handler.sendEmptyMessage(SearchInfoFg.MSG_CONNECT_SUCCESS);
 		GocsdkCallbackImp.hfpStatus = 1;
+		Log.i("stateNK_hfpStatus","1");
 	}
 
 	@Override
@@ -60,11 +61,13 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 //			return;
 //		handler.sendEmptyMessage(SearchInfoFg.MSG_CONNECT_FAILE);
 		GocsdkCallbackImp.hfpStatus = 0;
+		Log.i("stateNK_hfpStatus","0");
 	}
 
 	@Override
 	public void onCallSucceed(String number) throws RemoteException {
 		GocsdkCallbackImp.hfpStatus = 5;
+		Log.i("stateNK_hfpStatus","5");
 	}
 
 	@Override
@@ -74,6 +77,7 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 		handler1.sendMessage(handler1.obtainMessage(Myapplication.MSG_COMING, number));
 		GocsdkCallbackImp.number = number;
 		GocsdkCallbackImp.hfpStatus = 4;
+		Log.i("stateNK_hfpStatus","4");
 
 	}
 
@@ -83,16 +87,17 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 		Log.i("stateNKGocsdkCallback","onHangUp");
 
 
-		Handler handler2 = InComingActivity2.getHandler();
+		Handler handler2 = InComingActivity.getHandler();
 		if(handler2!=null){
-			handler2.sendEmptyMessage(InComingActivity2.MSG_INCOMINNG_HANGUP);
+			handler2.sendEmptyMessage(InComingActivity.MSG_INCOMINNG_HANGUP);
 		}
-		Handler handler = CallActivity2.getHandler();
+		Handler handler = CallActivity.getHandler();
 		if(handler == null){
 			return;
 		}
-		handler.sendEmptyMessage(CallActivity2.MSG_INCOMING_HANGUP);
+		handler.sendEmptyMessage(CallActivity.MSG_INCOMING_HANGUP);
 		GocsdkCallbackImp.hfpStatus = 7;
+		Log.i("stateNK_hfpStatus","7");
 	}
 
 	@Override
@@ -104,6 +109,7 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 		}
 		handler.sendEmptyMessage(Myapplication.MSG_TALKING);
 		GocsdkCallbackImp.hfpStatus = 6;
+		Log.i("stateNK_hfpStatus","6");
 
 	}
 
@@ -232,27 +238,34 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 	@Override
 	public void onHfpStatus(int status) throws RemoteException {
 		switch (status) {
-		case 0:
-			hfpStatus = 0;
-			break;
-		case 1:
-			hfpStatus = 0;
-			break;
-		case 2:
-			hfpStatus = 0;
-			break;
-		case 3:
-			hfpStatus = 1;
-			break;
-		case 4:
-			hfpStatus = 5;
-			break;
-		case 5:
-			hfpStatus = 4;
-			break;
-		case 6:
-			hfpStatus = 6;
-			break;
+			case 0:
+				hfpStatus = 0;
+				Log.i("stateNK_hfpStatus","0");
+				break;
+			case 1:
+				hfpStatus = 0;
+				Log.i("stateNK_hfpStatus","0");
+				break;
+			case 2:
+				hfpStatus = 0;
+				Log.i("stateNK_hfpStatus","0");
+				break;
+			case 3:
+				hfpStatus = 1;
+				Log.i("stateNK_hfpStatus","1");
+				break;
+			case 4:
+				hfpStatus = 5;
+				Log.i("stateNK_hfpStatus","5");
+				break;
+			case 5:
+				hfpStatus = 4;
+				Log.i("stateNK_hfpStatus","4");
+				break;
+			case 6:
+				hfpStatus = 6;
+				Log.i("stateNK_hfpStatus","6");
+				break;
 		}
 	}
 

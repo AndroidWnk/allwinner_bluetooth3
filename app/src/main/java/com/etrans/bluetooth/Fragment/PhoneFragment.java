@@ -183,6 +183,7 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.iv_num_j:
                 appendNum("#");
+
                 break;
             case R.id.iv_clear_num:
                 delNum();

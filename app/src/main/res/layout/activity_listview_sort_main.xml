@@ -88,10 +88,9 @@
             android:layout_width="80.0dip"
             android:layout_height="80.0dip"
             android:layout_gravity="center"
-            android:background="@drawable/sorlistview_show_head_toast_bg"
             android:gravity="center"
             android:textColor="#ffffffff"
-            android:textSize="30.0dip"
+            android:textSize="60.0dip"
             android:visibility="invisible" />
 
         <com.etrans.bluetooth.View.SideBar

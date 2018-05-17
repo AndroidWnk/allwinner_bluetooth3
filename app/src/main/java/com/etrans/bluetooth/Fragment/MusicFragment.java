@@ -19,6 +19,7 @@ import com.etrans.bluetooth.event.A2dpStatusEvent;
 import com.etrans.bluetooth.event.MusicInfoEvent;
 import com.etrans.bluetooth.utils.SpectrumSurfaceView;
 import com.etrans.bluetooth.utils.XxCircleRotateView;
+import com.goodocom.gocsdk.IGocsdkService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -51,6 +52,22 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
         return mview;
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            Log.i("stateNK","刷新数据");
+//            if (GocsdkCallbackImp.hfpStatus > 0) {
+                try {
+                    IGocsdkService service = MainActivity.getService();
+                    if(service != null)service.getMusicInfo();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+//            }
+        }
+    }
 
     private void initView() {
         mSeekBar = (SeekBar) mview.findViewById(R.id.seekBar);

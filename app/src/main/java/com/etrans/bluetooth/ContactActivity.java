@@ -29,9 +29,7 @@ import java.util.List;
 
 /**
  * 单元名称:ContactActivity.java
- * Created by fuxiaolei on 2016/8/30.
  * 说明:
- * Last Change by fuxiaolei on 2016/8/30.
  */
 public class ContactActivity extends Activity implements View.OnClickListener{
     private ListView sortListView;

@@ -27,7 +27,7 @@ import com.etrans.bluetooth.Goc.GocsdkService;
 import com.etrans.bluetooth.Goc.PlayerService;
 import com.etrans.bluetooth.bean.Phonebook;
 import com.etrans.bluetooth.db.Database;
-import com.etrans.bluetooth.domain.ContactInfo;
+import com.etrans.bluetooth.domain.ContactInfos;
 import com.goodocom.gocsdk.IGocsdkService;
 
 import java.util.ArrayList;
@@ -170,13 +170,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (GocsdkCallbackImp.hfpStatus > 0) {
             reflashContactsData();
         } else {
-            List<ContactInfo> contactInfos = Database.queryAllContact(systemDb);
+            List<ContactInfos> contactInfos = Database.queryAllContacts(systemDb);
             Map<String, String> map = null;
             for (int i = 0; i < contactInfos.size(); i++) {
-                ContactInfo contactInfo = contactInfos.get(i);
+                ContactInfos contactInfo = contactInfos.get(i);
                 map = new HashMap<String, String>();
                 map.put("itemName", contactInfo.name);
-                map.put("itemNum", contactInfo.number);
+                map.put("itemNum", contactInfo.num);
                 contacts.add(map);
             }
         }

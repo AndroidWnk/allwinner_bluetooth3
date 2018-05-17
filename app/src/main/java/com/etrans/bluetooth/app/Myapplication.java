@@ -9,9 +9,9 @@ import android.os.RemoteException;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 
-import com.etrans.bluetooth.CallActivity2;
+import com.etrans.bluetooth.CallActivity;
 import com.etrans.bluetooth.Goc.BlueToothInfo;
-import com.etrans.bluetooth.InComingActivity2;
+import com.etrans.bluetooth.InComingActivity;
 import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.db.Database;
 
@@ -37,11 +37,10 @@ public class Myapplication extends Application{
                     String phonename = "";
                     mComingPhoneNum = phonenum;
                     SQLiteDatabase mDbDataBase = Database.getSystemDb();
-                    Database.createTable(mDbDataBase,
-                            Database.Sql_create_phonebook_tab);
+                    Database.createTable(mDbDataBase, Database.Sql_create_phonebook_tab);
                     phonename = Database.queryPhoneName(mDbDataBase,
                             Database.PhoneBookTable, phonenum);// 根据号码查询联系人
-                    Intent intent = new Intent(context, InComingActivity2.class);
+                    Intent intent = new Intent(context, InComingActivity.class);
                     if (TextUtils.isEmpty(phonename)) {
                         intent.putExtra("incomingNumber", phonenum);
                     } else {
@@ -52,18 +51,18 @@ public class Myapplication extends Application{
                     break;
                 case MSG_TALKING:// 接听
                     if (isInComing) {// 来电接听
-                        Handler handler = InComingActivity2.getHandler();
+                        Handler handler = InComingActivity.getHandler();
                         if (handler == null) {
                             return;
                         }
-                        handler.sendEmptyMessage(InComingActivity2.MSG_INCOMING_CONNECTION);
+                        handler.sendEmptyMessage(InComingActivity.MSG_INCOMING_CONNECTION);
                     } else {// 拨出接听
-                        Handler handler = CallActivity2.getHandler();
+                        Handler handler = CallActivity.getHandler();
                         if (handler == null) {
                             return;
                         }
                         System.out.println("命令来了我就发送");
-                        handler.sendEmptyMessage(CallActivity2.Msg_CONNECT);
+                        handler.sendEmptyMessage(CallActivity.Msg_CONNECT);
                     }
                     break;
                 case MSG_OUTGONG:// 拨出
@@ -83,7 +82,7 @@ public class Myapplication extends Application{
 
     private void callOut(String phoneNumber2) {
         placeCall(phoneNumber2);
-        Intent intent = new Intent(this, CallActivity2.class);
+        Intent intent = new Intent(this, CallActivity.class);
         intent.putExtra("callNumber", phoneNumber2);
         intent.putExtra("isConnect", false);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );

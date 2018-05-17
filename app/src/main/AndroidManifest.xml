@@ -24,24 +24,23 @@
         <activity
             android:name="com.etrans.bluetooth.CallogActivity"
             android:screenOrientation="landscape"
-            android:label="@string/Callog"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
 
+        <activity
+            android:name="com.etrans.bluetooth.CallActivitydemo"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name="com.etrans.bluetooth.CallActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:name="com.etrans.bluetooth.CallActivity2"
+            android:name="com.etrans.bluetooth.InComingActivitydemo"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name="com.etrans.bluetooth.InComingActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
-            android:name="com.etrans.bluetooth.InComingActivity2"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity

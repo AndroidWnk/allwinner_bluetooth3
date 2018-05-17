@@ -51,7 +51,7 @@ public class Database {
 	}
 	
 	
-	public static List<ContactInfo> queryAllContact(SQLiteDatabase db){
+	public static List<ContactInfo> queryAllContact(SQLiteDatabase db){ //查询所有联系人
 		createTable(db,Sql_create_phonebook_tab);
 		Cursor cursor = db.query(PhoneBookTable, new String[] { "phonename",
 				"phonenumber" }, null, null, null, null, null);
@@ -66,7 +66,7 @@ public class Database {
 		cursor.close();
 		return contacts;
 	}
-	public static List<ContactInfos> queryAllContacts(SQLiteDatabase db){
+	public static List<ContactInfos> queryAllContacts(SQLiteDatabase db){  //查询所有联系人
 		createTable(db,Sql_create_phonebook_tab);
 		Cursor cursor = db.query(PhoneBookTable, new String[] { "phonename",
 				"phonenumber" }, null, null, null, null, null);
