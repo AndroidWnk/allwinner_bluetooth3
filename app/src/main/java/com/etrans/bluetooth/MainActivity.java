@@ -1,13 +1,8 @@
 package com.etrans.bluetooth;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,10 +16,7 @@ import android.widget.TextView;
 
 import com.etrans.bluetooth.Fragment.MusicFragment;
 import com.etrans.bluetooth.Fragment.PhoneFragment;
-import com.etrans.bluetooth.Goc.BootReceiver;
 import com.etrans.bluetooth.Goc.GocsdkCallbackImp;
-import com.etrans.bluetooth.Goc.GocsdkService;
-import com.etrans.bluetooth.Goc.PlayerService;
 import com.etrans.bluetooth.bean.Phonebook;
 import com.etrans.bluetooth.db.Database;
 import com.etrans.bluetooth.domain.ContactInfos;
@@ -50,12 +42,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static String mLocalName = null;
     public static String mPinCode = null;
     public static String currentDeviceName = "";
-    private Intent gocsdkService;
-    private MyConn conn;
     public static GocsdkCallbackImp callback;
     //    private AudioManager mAudioManager;
     private static IGocsdkService iGocsdkService;
-    private BootReceiver receiver;
     private static Handler hand = null;
     public static Handler getHandler() {
         return hand;
@@ -147,15 +136,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_main);
         //goc///////////////////////////////////////////////////Service
         // 注册开机广播接收者
-        myRegisterReceiver();
-        gocsdkService = new Intent(this, GocsdkService.class);
-        stopService(gocsdkService);
-        conn = new MyConn();
-        bindService(gocsdkService, conn, BIND_AUTO_CREATE);
         // 开启播放服务
-        Intent playerService = new Intent(this, PlayerService.class);
-        startService(playerService);
-        callback = new GocsdkCallbackImp();
         hand = handler;
 ////////////////////////////////////////////////////////////////////////////////////////////////
         InitData();
@@ -308,76 +289,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-    //Goc////////////////////////////////////////////////////////////////Service
-    private class MyConn implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-
-            iGocsdkService = IGocsdkService.Stub.asInterface(service);
-            // 蓝牙回调注册
-            // 查询当前HFP状态
-            try {
-                iGocsdkService.registerCallback(callback);
-
-                handler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        try {
-                            iGocsdkService.inqueryHfpStatus();
-                            iGocsdkService.musicUnmute();
-                            iGocsdkService.getLocalName();
-                            iGocsdkService.getPinCode();
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, 500);
-
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    }
-
-    private void myRegisterReceiver() {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.intent.action.BOOT_COMPLETED");
-        receiver = new BootReceiver();
-        registerReceiver(receiver, filter);
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        //Goc///////////////////////////////////////////////////Service
-
-        // 注销蓝牙回调
-        try {
-            iGocsdkService.unregisterCallback(callback);
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        // 注销开机广播
-        unregisterReceiver(receiver);
-        // 解绑服务
-        unbindService(conn);
-        startService(gocsdkService);
+//        //Goc///////////////////////////////////////////////////Service
+//
+//        // 注销蓝牙回调
+//        try {
+//            iGocsdkService.unregisterCallback(callback);
+//
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
+//        // 注销开机广播
+//        unregisterReceiver(receiver);
+//        // 解绑服务
+//        unbindService(conn);
+//        startService(gocsdkService);
 
         ///////////////////////////////////////////////////////////////////
 

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.etrans.bluetooth">
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application
         android:name=".app.Myapplication"
         android:allowBackup="true"
@@ -12,11 +13,26 @@
         >
         <activity android:name=".MainActivity">
             <intent-filter>
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.etrans.bluetooth.BluetoothActivity2"
+            android:configChanges="mcc|mnc|orientation|keyboardHidden|screenSize|keyboardHidden|navigation|screenLayout|fontScale|uiMode|smallestScreenSize"
+            android:label="@string/app_BTSettings"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
             </intent-filter>
         </activity>
+
+
         <activity
             android:name="com.etrans.bluetooth.ContactActivity"
             android:screenOrientation="landscape"

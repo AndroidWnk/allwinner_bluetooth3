@@ -9,7 +9,7 @@
     <string name="disconnect">蓝牙未连接</string>
     <string name="close">蓝牙未打开</string>
     <string name="edit_contact_digits">QAZXSWEDCVFRTGBNHYUJMKIOLPqazxswedcvfrtgbnhyujmkiolp</string>
-    <string name="btearphone_setting_name">bt_unconnected蓝牙名称：</string>
+    <string name="btearphone_setting_name">蓝牙名称：</string>
     <string name="btearphone_setting_passwd">蓝牙密码：</string>
     <string name="bt_unconnected">未连接</string>
     <string name="bt_Calling">正在呼叫...</string>
@@ -28,4 +28,15 @@
     <string name="bt_unkonw">未知</string>
     <string name="bt_dialing">拨号中..</string>
     <string name="bt_title">电话</string>
+
+    <string name="app_BTSettings">蓝牙设置</string>
+    <string name="string_btn_settings">设置</string>
+    <string name="string_btn_paired_devices">配对设备</string>
+    <string name="string_btn_avaliable_devices">可用设备</string>
+    <string name="btearphone_setting_failure">设置失败！</string>
+    <string name="btearphone_setting_succ">设置成功！</string>
+    <string name="string_tips_bt_search_device">搜索设备</string>
+    <string name="string_tips_bt_searching_device">正在搜索...</string>
+    <string name="string_btn_Paired_phone">已配对设备</string>
+    <string name="btearphone_setting_pin">蓝牙pin号：</string>
 </resources>

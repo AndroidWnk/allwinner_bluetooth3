@@ -7,12 +7,16 @@ import android.util.Log;
 
 import com.etrans.bluetooth.CallActivity;
 import com.etrans.bluetooth.CallogActivity;
+import com.etrans.bluetooth.Fragment.PairedListinfoFg;
+import com.etrans.bluetooth.Fragment.SearchInfoFg;
+import com.etrans.bluetooth.Fragment.SettingInfoFg;
 import com.etrans.bluetooth.InComingActivity;
 import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.app.Myapplication;
 import com.etrans.bluetooth.bean.Phonebook;
 import com.etrans.bluetooth.domain.CallLogInfo;
 import com.etrans.bluetooth.event.A2dpStatusEvent;
+import com.etrans.bluetooth.event.AutoConnectAcceptEvent;
 import com.etrans.bluetooth.event.MusicInfoEvent;
 import com.goodocom.gocsdk.IGocsdkCallback;
 
@@ -37,14 +41,14 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 	@Override
 	public void onHfpConnected() throws RemoteException {
 		Log.i("stateNK","OK");
-//		Handler handler2 = PairedListinfoFg.getHandler();
-//		if(handler2!=null){
-//			handler2.sendEmptyMessage(PairedListinfoFg.MSG_CONNECT_SUCCESS);
-//		}
-//		Handler handler = SearchInfoFg.getHandler();
-//		if(handler == null)
-//			return;
-//		handler.sendEmptyMessage(SearchInfoFg.MSG_CONNECT_SUCCESS);
+		Handler handler2 = PairedListinfoFg.getHandler();
+		if(handler2!=null){
+			handler2.sendEmptyMessage(PairedListinfoFg.MSG_CONNECT_SUCCESS);
+		}
+		Handler handler = SearchInfoFg.getHandler();
+		if(handler == null)
+			return;
+		handler.sendEmptyMessage(SearchInfoFg.MSG_CONNECT_SUCCESS);
 		GocsdkCallbackImp.hfpStatus = 1;
 		Log.i("stateNK_hfpStatus","1");
 	}
@@ -52,14 +56,14 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 	@Override
 	public void onHfpDisconnected() throws RemoteException {
 		Log.i("stateNK","OK");
-//		Handler handler2 = PairedListinfoFg.getHandler();
-//		if(handler2!=null){
-//			handler2.sendEmptyMessage(PairedListinfoFg.MSG_CONNECT_FAILE);
-//		}
-//		Handler handler = SearchInfoFg.getHandler();
-//		if(handler == null)
-//			return;
-//		handler.sendEmptyMessage(SearchInfoFg.MSG_CONNECT_FAILE);
+		Handler handler2 = PairedListinfoFg.getHandler();
+		if(handler2!=null){
+			handler2.sendEmptyMessage(PairedListinfoFg.MSG_CONNECT_FAILE);
+		}
+		Handler handler = SearchInfoFg.getHandler();
+		if(handler == null)
+			return;
+		handler.sendEmptyMessage(SearchInfoFg.MSG_CONNECT_FAILE);
 		GocsdkCallbackImp.hfpStatus = 0;
 		Log.i("stateNK_hfpStatus","0");
 	}
@@ -179,24 +183,27 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 	@Override
 	public void onAutoConnectAccept(boolean autoConnect, boolean autoAccept)
 			throws RemoteException {
+		Log.i("stateNK","autoConnect="+autoConnect+"autoAccept="+autoAccept);
+
+		EventBus.getDefault().post(new AutoConnectAcceptEvent(autoConnect,autoAccept));
 	}
 
 	@Override
 	public void onCurrentAddr(String addr) throws RemoteException {
-//		Handler handler2 = PairedListinfoFg.getHandler();
-//		if(handler2!=null){
-//			Message msg = new Message();
-//			msg.what = PairedListinfoFg.MSG_CONNECT_ADDRESS;
-//			msg.obj = addr;
-//			handler2.sendMessage(msg);
-//		}
-//		Handler handler3 = SearchInfoFg.getHandler();
-//		if(handler3!=null){
-//			Message msg = new Message();
-//			msg.what = SearchInfoFg.MSG_CONNECT_ADDRESS;
-//			msg.obj = addr;
-//			handler3.sendMessage(msg);
-//		}
+		Handler handler2 = PairedListinfoFg.getHandler();
+		if(handler2!=null){
+			Message msg = new Message();
+			msg.what = PairedListinfoFg.MSG_CONNECT_ADDRESS;
+			msg.obj = addr;
+			handler2.sendMessage(msg);
+		}
+		Handler handler3 = SearchInfoFg.getHandler();
+		if(handler3!=null){
+			Message msg = new Message();
+			msg.what = SearchInfoFg.MSG_CONNECT_ADDRESS;
+			msg.obj = addr;
+			handler3.sendMessage(msg);
+		}
 //		Handler handler = FragmentMailList.getHandler();
 //		if(handler == null){
 //			return;
@@ -283,26 +290,26 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 
 	@Override
 	public void onCurrentDeviceName(String name) throws RemoteException {
-//		Handler handler = MainActivity.getHandler();
-//		if(handler==null){
-//			return;
-//		}
-//		Message msg = new Message();
-//		msg.what = MainActivity.MSG_DEVICENAME;
-//		msg.obj = name;
-//		handler.sendMessage(msg);
+		Handler handler = SettingInfoFg.getHandler();
+		if(handler==null){
+			return;
+		}
+		Message msg = new Message();
+		msg.what = SettingInfoFg.MSG_DEVICE_NAME;
+		msg.obj = name;
+		handler.sendMessage(msg);
 	}
 
 	@Override
 	public void onCurrentPinCode(String code) throws RemoteException {
-//		Handler handler = MainActivity.getHandler();
-//		if(handler==null){
-//			return;
-//		}
-//		Message msg = new Message();
-//		msg.what = MainActivity.MSG_DEVICEPINCODE;
-//		msg.obj = code;
-//		handler.sendMessage(msg);
+		Handler handler = SettingInfoFg.getHandler();
+		if(handler==null){
+			return;
+		}
+		Message msg = new Message();
+		msg.what = SettingInfoFg.MSG_PIN_CODE;
+		msg.obj = code;
+		handler.sendMessage(msg);
 	}
 
 	@Override
@@ -312,18 +319,18 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 	@Override
 	public void onCurrentAndPairList(int index, String name, String addr)
 			throws RemoteException {
-//		Handler handler = PairedListinfoFg.getHandler();
-//		if(handler == null){
-//			return;
-//		}
-//		BlueToothPairedInfo info = new BlueToothPairedInfo();
-//		info.index = index;
-//		info.name = name;
-//		info.address = addr;
-//		Message msg = new Message();
-//		msg.obj = info;
-//		msg.what = PairedListinfoFg.MSG_PAIRED_DEVICE;
-//		handler.sendMessage(msg);
+		Handler handler = PairedListinfoFg.getHandler();
+		if(handler == null){
+			return;
+		}
+		BlueToothPairedInfo info = new BlueToothPairedInfo();
+		info.index = index;
+		info.name = name;
+		info.address = addr;
+		Message msg = new Message();
+		msg.obj = info;
+		msg.what = PairedListinfoFg.MSG_PAIRED_DEVICE;
+		handler.sendMessage(msg);
 	}
 
 	@Override
@@ -417,26 +424,26 @@ public class GocsdkCallbackImp extends IGocsdkCallback.Stub {
 
 	@Override
 	public void onDiscovery(String name, String addr) throws RemoteException {
-//		Handler handler = SearchInfoFg.getHandler();
-//		Message msg = new Message();
-//		msg.what = SearchInfoFg.MSG_SEARCHE_DEVICE;
-//		BlueToothInfo info = new BlueToothInfo();
-//		info.name = name;
-//		info.address = addr;
-//		msg.obj = info;
-//		if (handler == null) {
-//			return;
-//		}
-//		handler.sendMessage(msg);
+		Handler handler = SearchInfoFg.getHandler();
+		Message msg = new Message();
+		msg.what = SearchInfoFg.MSG_SEARCHE_DEVICE;
+		BlueToothInfo info = new BlueToothInfo();
+		info.name = name;
+		info.address = addr;
+		msg.obj = info;
+		if (handler == null) {
+			return;
+		}
+		handler.sendMessage(msg);
 	}
 
 	@Override
 	public void onDiscoveryDone() throws RemoteException {
-//		Handler handler = SearchInfoFg.getHandler();
-//		if (handler == null) {
-//			return;
-//		}
-//		handler.sendEmptyMessage(SearchInfoFg.MSG_SEARCHE_DEVICE_DONE);
+		Handler handler = SearchInfoFg.getHandler();
+		if (handler == null) {
+			return;
+		}
+		handler.sendEmptyMessage(SearchInfoFg.MSG_SEARCHE_DEVICE_DONE);
 	}
 
 	@Override
