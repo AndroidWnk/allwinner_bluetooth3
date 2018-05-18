@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,7 +16,7 @@ import com.etrans.bluetooth.Fragment.SettingInfoFg;
 import com.etrans.bluetooth.Goc.BootReceiver;
 import com.etrans.bluetooth.Goc.GocsdkCallbackImp;
 
-public class BluetoothActivity2 extends Activity implements View.OnClickListener {
+public class BluetoothActivity extends Activity implements View.OnClickListener {
 
     //goc///////////////////////////////////////////Service
     public static final int MSG_DEVICENAME = 11;
@@ -66,6 +67,7 @@ public class BluetoothActivity2 extends Activity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth2);
+        Log.i("stateNK_Myapplication","蓝牙界面已打开");
         //goc///////////////////////////////////////////////////Service
         // 注册开机广播接收者
         hand = handler;

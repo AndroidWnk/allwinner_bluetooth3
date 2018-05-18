@@ -11,6 +11,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.etrans.bluetooth.app.Myapplication;
+
 public class InComingActivity extends Activity implements OnClickListener {
     public static final int MSG_INCOMINNG_HANGUP = 0;
     public static final int MSG_INCOMING_CONNECTION = 1;
@@ -64,7 +66,7 @@ public class InComingActivity extends Activity implements OnClickListener {
         switch (v.getId()) {
             case R.id.iv_connect:
                 try {
-                    MainActivity.getService().phoneAnswer();
+                    Myapplication.getService().phoneAnswer();
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -79,7 +81,7 @@ public class InComingActivity extends Activity implements OnClickListener {
     private void hangupInComing() {
 
 		try {
-			MainActivity.getService().phoneHangUp();
+            Myapplication.getService().phoneHangUp();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -88,7 +90,7 @@ public class InComingActivity extends Activity implements OnClickListener {
 
     private void connectInComing(String incomingNumber2) {
         try {
-            MainActivity.getService().phoneAnswer();
+            Myapplication.getService().phoneAnswer();
         } catch (RemoteException e) {
             e.printStackTrace();
         }

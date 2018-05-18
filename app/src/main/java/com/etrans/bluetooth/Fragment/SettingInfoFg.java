@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.etrans.bluetooth.BluetoothActivity2;
+import com.etrans.bluetooth.BluetoothActivity;
 import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.R;
 import com.etrans.bluetooth.app.Myapplication;
@@ -51,7 +51,7 @@ public class SettingInfoFg extends Fragment implements View.OnClickListener {
     private TextView mTvBluetoothState,tv_bluetooth_connectstate, tv_bluetooth_answerstate, et_bluetooth_imei;
     private EditText et_pin_code, et_device_name;
     private Button btn_commit, btn_pincommit,btn_phone;
-    private BluetoothActivity2 activity;
+    private BluetoothActivity activity;
     private static Handler hand = null;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -100,7 +100,7 @@ public class SettingInfoFg extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (BluetoothActivity2) getActivity();
+        activity = (BluetoothActivity) getActivity();
     }
 
     @Override
@@ -245,7 +245,7 @@ public class SettingInfoFg extends Fragment implements View.OnClickListener {
 
 
 //                try {
-//                    BluetoothActivity2.getService().phoneDail("1008619");
+//                    BluetoothActivity.getService().phoneDail("1008619");
 //                } catch (RemoteException e) {
 //                    e.printStackTrace();
 //                }

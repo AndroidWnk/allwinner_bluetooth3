@@ -18,7 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.etrans.bluetooth.BluetoothActivity2;
+import com.etrans.bluetooth.BluetoothActivity;
 import com.etrans.bluetooth.Goc.BlueToothPairedInfo;
 import com.etrans.bluetooth.Goc.TransparentDialog;
 import com.etrans.bluetooth.R;
@@ -42,7 +42,7 @@ public class PairedListinfoFg extends Fragment {
     public static final int MSG_CONNECT_FAILE = 3;//断开连接时回调刷新列表
     public static final int MSG_CURRENT_STATUS = 4;
     public static final int MSG_HFP_STATUS = 5;
-    private BluetoothActivity2 activity;
+    private BluetoothActivity activity;
     private ListView lv_paired_list;
     private DeviceAdapter deviceAdapter;
     private String address = null;
@@ -122,7 +122,7 @@ public class PairedListinfoFg extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (BluetoothActivity2) getActivity();
+        activity = (BluetoothActivity) getActivity();
 
     }
 

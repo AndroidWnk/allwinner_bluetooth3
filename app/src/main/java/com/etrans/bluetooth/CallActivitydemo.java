@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.etrans.bluetooth.Goc.GocsdkCallbackImp;
+import com.etrans.bluetooth.app.Myapplication;
 import com.etrans.bluetooth.db.Database;
 import com.etrans.bluetooth.utils.ToastFactory;
 
@@ -286,14 +287,14 @@ public class CallActivitydemo extends Activity implements OnClickListener {
 			volume_flag = !volume_flag;
 			if (volume_flag) {// 手机端
 				try {
-					MainActivity.getService().phoneTransfer();
+					Myapplication.getService().phoneTransfer();
 				} catch (RemoteException e1) {
 					e1.printStackTrace();
 				}
 				ToastFactory.showToast(this,"手机端");
 			} else {// 车机端
 				try {
-					MainActivity.getService().phoneTransferBack();
+					Myapplication.getService().phoneTransferBack();
 				} catch (RemoteException e1) {
 					e1.printStackTrace();
 				}
@@ -314,7 +315,7 @@ public class CallActivitydemo extends Activity implements OnClickListener {
 
 		//Toast.makeText(this, "挂断", 0).show();
 		try {
-			MainActivity.getService().phoneHangUp();
+			Myapplication.getService().phoneHangUp();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -330,7 +331,7 @@ public class CallActivitydemo extends Activity implements OnClickListener {
 					return;
 				}
 				try {
-					MainActivity.getService().phoneDail(mLastNumber);
+					Myapplication.getService().phoneDail(mLastNumber);
 				} catch (RemoteException e) {
 					e.printStackTrace();
 				}

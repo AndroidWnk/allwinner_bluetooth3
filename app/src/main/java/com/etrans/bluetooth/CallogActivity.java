@@ -27,6 +27,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.etrans.bluetooth.Goc.GocsdkCallbackImp;
+import com.etrans.bluetooth.app.Myapplication;
 import com.etrans.bluetooth.domain.CallLogInfo;
 import com.etrans.bluetooth.utils.NoScrollViewPager;
 import com.etrans.bluetooth.utils.ToastFactory;
@@ -294,7 +295,7 @@ public class CallogActivity extends Activity implements View.OnClickListener {
         }
         call_log_miss.clear();
         try {
-            MainActivity.getService().callLogstartUpdate(CALLLOG_MISS);
+            Myapplication.getService().callLogstartUpdate(CALLLOG_MISS);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -312,7 +313,7 @@ public class CallogActivity extends Activity implements View.OnClickListener {
         }
         call_log_out.clear();
         try {
-            MainActivity.getService().callLogstartUpdate(CALLLOG_OUT);
+            Myapplication.getService().callLogstartUpdate(CALLLOG_OUT);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -334,7 +335,7 @@ public class CallogActivity extends Activity implements View.OnClickListener {
 
         call_log_in.clear();
         try {
-            MainActivity.getService().callLogstartUpdate(CALLLOG_IN);
+            Myapplication.getService().callLogstartUpdate(CALLLOG_IN);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -493,7 +494,7 @@ public class CallogActivity extends Activity implements View.OnClickListener {
                 return;
             }
             try {
-                MainActivity.getService().phoneDail(mLastNumber);
+                Myapplication.getService().phoneDail(mLastNumber);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.etrans.bluetooth.A2dpStatus;
 import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.R;
+import com.etrans.bluetooth.app.Myapplication;
 import com.etrans.bluetooth.event.A2dpStatusEvent;
 import com.etrans.bluetooth.event.MusicInfoEvent;
 import com.etrans.bluetooth.utils.SpectrumSurfaceView;
@@ -60,7 +61,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
             Log.i("stateNK","刷新数据");
 //            if (GocsdkCallbackImp.hfpStatus > 0) {
                 try {
-                    IGocsdkService service = MainActivity.getService();
+                    IGocsdkService service = Myapplication.getService();
                     if(service != null)service.getMusicInfo();
                 } catch (RemoteException e) {
                     e.printStackTrace();
@@ -104,8 +105,8 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
 //                } else {
                     Log.d("app", "click play image!");
                     try {
-                        if (MainActivity.getService() != null) {
-                            MainActivity.getService().musicPlayOrPause();
+                        if (Myapplication.getService() != null) {
+                            Myapplication.getService().musicPlayOrPause();
                         }
                     } catch (RemoteException e) {
                         e.printStackTrace();
@@ -115,8 +116,8 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.btn_forward://下一首
                 try {
-                    if(MainActivity.getService() != null){
-                        MainActivity.getService().musicNext();
+                    if(Myapplication.getService() != null){
+                        Myapplication.getService().musicNext();
                     }
                 } catch (RemoteException e) {
                     e.printStackTrace();
@@ -127,8 +128,8 @@ public class MusicFragment extends Fragment implements View.OnClickListener{
             case R.id.btn_backward://上一首
                 Log.d("app", "click previous");
                 try {
-                    if(MainActivity.getService() != null){
-                        MainActivity.getService().musicPrevious();
+                    if(Myapplication.getService() != null){
+                        Myapplication.getService().musicPrevious();
                     }
                 } catch (RemoteException e1) {
                     e1.printStackTrace();

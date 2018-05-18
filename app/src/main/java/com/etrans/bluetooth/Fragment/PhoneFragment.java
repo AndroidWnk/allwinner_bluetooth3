@@ -28,6 +28,7 @@ import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.R;
 import com.etrans.bluetooth.View.IPhoneView;
 import com.etrans.bluetooth.adapter.QueryContactAdapter;
+import com.etrans.bluetooth.app.Myapplication;
 import com.etrans.bluetooth.bean.Phonebook;
 import com.etrans.bluetooth.db.Database;
 import com.etrans.bluetooth.presenter.PhonePresenter;
@@ -271,7 +272,7 @@ public class PhoneFragment extends Fragment implements View.OnClickListener,IPho
 //                    GocDatabase.getDefault().clearPhonebook();
                     Database.delete_table_data(systemDb,Database.PhoneBookTable);
                     // 联系人列表下载
-                    MainActivity.getService().phoneBookStartUpdate();
+                    Myapplication.getService().phoneBookStartUpdate();
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -329,7 +330,7 @@ public class PhoneFragment extends Fragment implements View.OnClickListener,IPho
                 return;
             }
             try {
-                MainActivity.getService().phoneDail(mLastNumber);
+                Myapplication.getService().phoneDail(mLastNumber);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name="com.etrans.bluetooth.BluetoothActivity2"
+            android:name="com.etrans.bluetooth.BluetoothActivity"
             android:configChanges="mcc|mnc|orientation|keyboardHidden|screenSize|keyboardHidden|navigation|screenLayout|fontScale|uiMode|smallestScreenSize"
             android:label="@string/app_BTSettings"
             android:windowSoftInputMode="stateAlwaysHidden">

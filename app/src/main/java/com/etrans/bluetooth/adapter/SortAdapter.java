@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.R;
+import com.etrans.bluetooth.app.Myapplication;
 import com.etrans.bluetooth.domain.ContactInfos;
 
 import java.util.List;
@@ -127,13 +127,12 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer{
 				return;
 			}
 			try {
-				MainActivity.getService().phoneDail(mLastNumber);
+				Myapplication.getService().phoneDail(mLastNumber);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-
 
 
 

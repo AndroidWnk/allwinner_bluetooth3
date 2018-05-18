@@ -17,10 +17,10 @@ import android.widget.TextView;
 import com.etrans.bluetooth.Fragment.MusicFragment;
 import com.etrans.bluetooth.Fragment.PhoneFragment;
 import com.etrans.bluetooth.Goc.GocsdkCallbackImp;
+import com.etrans.bluetooth.app.Myapplication;
 import com.etrans.bluetooth.bean.Phonebook;
 import com.etrans.bluetooth.db.Database;
 import com.etrans.bluetooth.domain.ContactInfos;
-import com.goodocom.gocsdk.IGocsdkService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,18 +44,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static String currentDeviceName = "";
     public static GocsdkCallbackImp callback;
     //    private AudioManager mAudioManager;
-    private static IGocsdkService iGocsdkService;
     private static Handler hand = null;
     public static Handler getHandler() {
         return hand;
     }
     // 暴露方法，让其他页面能够获取主页面的参数
-    public static IGocsdkService getService() {
-        return iGocsdkService;
-    }
-    public boolean isConnected() {
-        return iGocsdkService != null;
-    }
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
 
@@ -96,7 +89,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 case MSG_PHONE_BOOK_DONE:
                     Log.i("stateNK","OK");//电话本下载完成
                     try {
-                        MainActivity.getService().getCurrentDeviceName();
+                        Myapplication.getService().getCurrentDeviceName();
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -186,7 +179,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 contacts.clear();
             }
             // 联系人列表下载
-            MainActivity.getService().phoneBookStartUpdate();
+            Myapplication.getService().phoneBookStartUpdate();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -218,7 +211,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case R.id.tv_download_count:
                 try {
-                    MainActivity.getService().getCurrentDeviceName();
+                    Myapplication.getService().getCurrentDeviceName();
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }

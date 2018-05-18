@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.etrans.bluetooth.CallActivity;
 import com.etrans.bluetooth.Goc.BlueToothInfo;
@@ -20,7 +21,6 @@ import com.etrans.bluetooth.Goc.GocsdkCallbackImp;
 import com.etrans.bluetooth.Goc.GocsdkService;
 import com.etrans.bluetooth.Goc.PlayerService;
 import com.etrans.bluetooth.InComingActivity;
-import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.db.Database;
 import com.goodocom.gocsdk.IGocsdkService;
 
@@ -136,7 +136,7 @@ public class Myapplication extends Application{
                 return;
             }
             try {
-                MainActivity.getService().phoneDail(mLastNumber);
+                Myapplication.getService().phoneDail(mLastNumber);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -157,6 +157,7 @@ public class Myapplication extends Application{
         stopService(gocsdkService);
         conn = new MyConn();
         bindService(gocsdkService, conn, BIND_AUTO_CREATE);
+        Log.i("stateNK_Myapplication","绑定服务");
         // 开启播放服务
         Intent playerService = new Intent(this, PlayerService.class);
         startService(playerService);
@@ -172,6 +173,7 @@ public class Myapplication extends Application{
         public void onServiceConnected(ComponentName name, IBinder service) {
 
             iGocsdkService = IGocsdkService.Stub.asInterface(service);
+            Log.i("stateNK_Myapplication","服务已绑定");
             // 蓝牙回调注册
             // 查询当前HFP状态
             try {

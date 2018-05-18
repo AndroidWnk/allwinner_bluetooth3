@@ -18,7 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.etrans.bluetooth.BluetoothActivity2;
+import com.etrans.bluetooth.BluetoothActivity;
 import com.etrans.bluetooth.Goc.BlueToothInfo;
 import com.etrans.bluetooth.Goc.GocsdkCallbackImp;
 import com.etrans.bluetooth.Goc.TransparentDialog;
@@ -46,7 +46,7 @@ public class SearchInfoFg extends Fragment implements View.OnClickListener{
     public static final int MSG_HFP_STATUS = 6;
     public static final int MSG_CONNECT_ADDRESS = 1001;//连接成功获取蓝牙地址
 
-    private BluetoothActivity2 activity;
+    private BluetoothActivity activity;
     private TextView iv_search_bt;
     private ListView lv_device_list;
 //    private Button btn_device_name;
@@ -144,7 +144,7 @@ public class SearchInfoFg extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (BluetoothActivity2) getActivity();
+        activity = (BluetoothActivity) getActivity();
         hand = handler;
     }
 
@@ -225,7 +225,7 @@ public class SearchInfoFg extends Fragment implements View.OnClickListener{
                     Myapplication.getService().disconnect();
                     disConnecting = true;
                     Connectaddress = address;
-//                    BluetoothActivity2.getService().connectDevice(blueToothInfo.address);
+//                    BluetoothActivity.getService().connectDevice(blueToothInfo.address);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
