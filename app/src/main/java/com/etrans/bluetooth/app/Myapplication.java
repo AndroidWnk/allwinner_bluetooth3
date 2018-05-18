@@ -111,7 +111,7 @@ public class Myapplication extends Application{
         super.onCreate();
 
         context = getApplicationContext() ;
-
+//        DataOperation.getInstance().init(context);
         hand = handler;
     }
 

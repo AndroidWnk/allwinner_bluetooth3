@@ -12,7 +12,17 @@
     <string name="btearphone_setting_name">bt_unconnected蓝牙名称：</string>
     <string name="btearphone_setting_passwd">蓝牙密码：</string>
     <string name="bt_unconnected">未连接</string>
+    <string name="bt_Calling">正在呼叫...</string>
+    <string name="bt_Talking">正在通话：</string>
+    <string name="bt_Call">来电</string>
+    <string name="bt_CallComing">来电...</string>
+    <string name="bt_CallOut">去电</string>
+    <string name="bt_CallMiss">未接来电</string>
     <string name="bt_Donloading_wait">正在导入联系人!</string>
+    <string name="bt_Please_connect_the_device_first">请先连接设备</string>
+    <string name="bt_Input_key">请输入关键字</string>
+    <string name="bt_Connect">连接中...</string>
+    <string name="bt_Music">蓝牙歌曲</string>
     <string name="bt_enter_correct_number">请输入正确的电话号码</string>
     <string name="bt_search">搜索联系人</string>
     <string name="bt_unkonw">未知</string>

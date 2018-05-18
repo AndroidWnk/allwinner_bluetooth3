@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="正在呼叫..."
+                android:text="@string/bt_Calling"
                 android:textColor="#fff"
                 android:textSize="20sp" />
 
@@ -55,7 +55,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="正在通话："
+                    android:text="@string/bt_Talking"
                     android:textColor="#fff"
                     android:textSize="20sp" />
 

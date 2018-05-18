@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.etrans.bluetooth.bean.Phonebook;
 import com.etrans.bluetooth.domain.CallLogInfo;
 import com.etrans.bluetooth.domain.ContactInfo;
 import com.etrans.bluetooth.domain.ContactInfos;
@@ -81,7 +82,7 @@ public class Database {
 		cursor.close();
 		return contacts;
 	}
-	// 通过号码，找联系人姓名
+	// 通过完整号码，找联系人姓名
 	public static String queryPhoneName(SQLiteDatabase db, String Table_name,
                                         String Phone_num) {
 		// 查询获得游标
@@ -108,6 +109,26 @@ public class Database {
 		}
 		cursor.close();
 		return null;
+	}
+
+
+	// 通过号码，找联系人姓名
+	public static List<Phonebook> queryPhoneNames(String contactPhoneNum) {
+		List<Phonebook> ContactBeanList = new ArrayList<Phonebook>();
+		Phonebook ContactBean = null;
+//        String sql = "SELECT * FROM " + DBOpenHelper.getPhoneBookName() + " WHERE NUM ='" + contactPhoneNum + "'";
+//        Cursor cursor = db.rawQuery(sql, null);
+		Cursor cursor = Database.getSystemDb().query(Database.PhoneBookTable, null, "phonenumber like ?", new String[]{"%" + contactPhoneNum + "%"}, null, null, null);
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				ContactBean = new Phonebook();
+				ContactBean.setName(cursor.getString(1));
+				ContactBean.setNum(cursor.getString(2));
+				ContactBeanList.add(ContactBean);
+			}
+			cursor.close();
+		}
+		return ContactBeanList;
 	}
 
 	

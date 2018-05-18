@@ -7,25 +7,36 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.telephony.PhoneNumberUtils;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.etrans.bluetooth.CallogActivity;
 import com.etrans.bluetooth.ContactActivity;
 import com.etrans.bluetooth.MainActivity;
 import com.etrans.bluetooth.R;
+import com.etrans.bluetooth.View.IPhoneView;
+import com.etrans.bluetooth.adapter.QueryContactAdapter;
+import com.etrans.bluetooth.bean.Phonebook;
 import com.etrans.bluetooth.db.Database;
+import com.etrans.bluetooth.presenter.PhonePresenter;
 import com.etrans.bluetooth.utils.ToastFactory;
 
+import java.util.List;
 
-public class PhoneFragment extends Fragment implements View.OnClickListener{
+
+public class PhoneFragment extends Fragment implements View.OnClickListener,IPhoneView{
 
     private static final String TAG = PhoneFragment.class.getSimpleName();
 
@@ -47,7 +58,10 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
     ImageView mIvClearNum,iv_contact,iv_ref_contact,iv_callog;
     Button mIvDial;
     private SQLiteDatabase systemDb;
-
+    private PhonePresenter phonePresenter;
+    private QueryContactAdapter mAdapter;
+    ListView mIvInputNumber;
+    RelativeLayout mRlIcon;
 
 
     public static Handler hand = null;
@@ -73,6 +87,7 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
         // 加载View，并返回
         mview = inflater.inflate(R.layout.phonefragment, null);
         activity = (MainActivity) getActivity();
+        phonePresenter = new PhonePresenter(this);
         initView();
         initListener();
         hand = handler;
@@ -100,8 +115,8 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
         iv_ref_contact = (ImageView) mview.findViewById(R.id.iv_ref_contact);
         iv_callog = (ImageView) mview.findViewById(R.id.iv_callog);
         mIvDial = (Button) mview.findViewById(R.id.iv_dial);
-
-
+        mIvInputNumber = (ListView) mview.findViewById(R.id.iv_input_number);
+        mRlIcon = (RelativeLayout) mview.findViewById(R.id.rl_icon);
     }
     private void initListener() {
         mIvNum1.setOnClickListener(this);
@@ -142,6 +157,43 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
                 return true;
             }
         });
+        mEtPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    showQueryList(false);
+                } else {
+                    phonePresenter.queryContact(mEtPhone.getText().toString());
+                }
+            }
+        });
+
+        mIvInputNumber.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Phonebook phonebook = mAdapter.get(position);
+                mEtPhone.setText(phonebook.getNum());
+
+                if (TextUtils.isEmpty(phonebook.getNum())) {
+                    ToastFactory.showToast(activity,"请输入电话号码");
+                } else {
+                    callOut(phonebook.getName());
+                    showQueryList(false);
+                }
+
+            }
+        });
     }
 
     @Override
@@ -159,9 +211,21 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.iv_num_3:
                 appendNum("3");
+
+                ////////////////////////////////
+//                phonePresenter.queryContact("100");
+                ///////////////////////////
+//                Phonebook phonebook = new Phonebook();
+//                phonebook.name = "张三";
+//                phonebook.num = "1008619";
+//                BluetoothPhoneBookModule.insertPhoneBook(phonebook);
                 break;
             case R.id.iv_num_4:
                 appendNum("4");
+//                Phonebook phonebook1 = new Phonebook();
+//                phonebook1.name = "李四";
+//                phonebook1.num = "10010";
+//                BluetoothPhoneBookModule.insertPhoneBook(phonebook1);
                 break;
             case R.id.iv_num_5:
                 appendNum("5");
@@ -270,5 +334,26 @@ public class PhoneFragment extends Fragment implements View.OnClickListener{
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void showQueryList(boolean isShow) {
+        mIvInputNumber.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        mRlIcon.setVisibility(isShow ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void notify(List<Phonebook> mLstContact) {
+
+        Log.e("mLstContact",mLstContact.size()+"");
+        if (mAdapter != null) {
+            mAdapter.setData(mLstContact);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            mAdapter = new QueryContactAdapter(activity);
+            mAdapter.setData(mLstContact);
+            mIvInputNumber.setAdapter(mAdapter);
+        }
+
     }
 }

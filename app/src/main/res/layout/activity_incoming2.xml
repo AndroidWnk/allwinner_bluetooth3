@@ -52,7 +52,7 @@
 			android:layout_alignParentBottom="true"
 			android:layout_centerHorizontal="true"
 			android:layout_marginBottom="30dp"
-			android:text="来电..."
+			android:text="@string/bt_CallComing"
 			android:textSize="24sp"
 			android:textColor="#fff" />
 

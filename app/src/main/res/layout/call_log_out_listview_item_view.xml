@@ -30,14 +30,14 @@
             android:id="@+id/tv_out_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="客服电话"
+            android:text=""
             android:textSize="30sp"
             android:textColor="#fff"/>
         <TextView 
             android:id="@+id/tv_out_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10021"
+            android:text=""
             android:textSize="18sp"
             android:textColor="#fff"/>
     </LinearLayout>
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:text="2016/1/9"
+        android:text="2018/5/9"
         android:textSize="23sp"/>
 
 </RelativeLayout>

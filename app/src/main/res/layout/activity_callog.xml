@@ -39,7 +39,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="来电"
+                        android:text="@string/bt_Call"
                         android:textColor="@color/white"
                         android:textSize="25dp" />
 
@@ -63,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="去电"
+                        android:text="@string/bt_CallOut"
                         android:textColor="@color/blue"
                         android:textSize="25dp" />
                 </FrameLayout>
@@ -87,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="未接来电"
+                        android:text="@string/bt_CallMiss"
                         android:textColor="@color/blue"
                         android:textSize="25dp" />
                 </FrameLayout>
@@ -142,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="请先连接设备"
+            android:text="@string/bt_Please_connect_the_device_first"
             android:textColor="#fff"
             android:textSize="23sp"
             android:visibility="visible" />

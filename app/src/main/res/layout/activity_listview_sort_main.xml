@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_search_input"
         android:drawableLeft="@drawable/btn_search"
-        android:hint="请输入关键字"
+        android:hint="@string/bt_Input_key"
         android:visibility="gone"
         android:singleLine="true"
         android:textSize="15.0dip" />

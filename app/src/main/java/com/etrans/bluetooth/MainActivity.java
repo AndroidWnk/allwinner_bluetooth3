@@ -162,6 +162,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         initView();
         initListener();
 
+        if (systemDb != null) {
+            Database.createTable(systemDb, Database.Sql_create_phonebook_tab);
+            Database.insert_phonebook(systemDb,
+                    Database.PhoneBookTable, "张三",
+                    "10086");
+            Database.createTable(systemDb, Database.Sql_create_phonebook_tab);
+            Database.insert_phonebook(systemDb,
+                    Database.PhoneBookTable, "李四",
+                    "10010");
+        }
+
 
     }
 

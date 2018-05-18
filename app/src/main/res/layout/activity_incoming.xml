@@ -17,7 +17,7 @@
 	    android:id="@+id/tv_incoming_status"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:text="来电..."
+	    android:text="@string/bt_CallComing"
 	    android:layout_centerHorizontal="true"
 	    android:layout_below="@id/tv_incoming_phonenumber"
 	    android:textColor="#fff"

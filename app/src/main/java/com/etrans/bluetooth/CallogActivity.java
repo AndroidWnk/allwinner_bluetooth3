@@ -42,13 +42,13 @@ import java.util.Map;
  * 说明:
  * Last Change by fuxiaolei on 2016/8/30.
  */
-public class CallogActivity extends Activity implements View.OnClickListener{
+public class CallogActivity extends Activity implements View.OnClickListener {
 
-    private ImageView ib_call_in,ib_call_out,ib_call_missed;
-    private FrameLayout fl_call_in,fl_call_out,fl_call_miss;
-    private TextView tv_call_in,tv_call_out,tv_call_miss;
+    private ImageView ib_call_in, ib_call_out, ib_call_missed;
+    private FrameLayout fl_call_in, fl_call_out, fl_call_miss;
+    private TextView tv_call_in, tv_call_out, tv_call_miss;
     private NoScrollViewPager vp_content;
-    private String[] callLogString = { "拨出", "打进", "未接" };
+    private String[] callLogString = {"拨出", "打进", "未接"};
     private static final int CALLLOG_IN = 3;
     private static final int CALLLOG_OUT = 1;
     private static final int CALLLOG_MISS = 2;
@@ -137,7 +137,9 @@ public class CallogActivity extends Activity implements View.OnClickListener{
                     showDisconnect();
                     break;
             }
-        };
+        }
+
+        ;
     };
     private Handler mainHandler;
     private ImageView image_animation;
@@ -159,9 +161,9 @@ public class CallogActivity extends Activity implements View.OnClickListener{
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); //显示状态栏
         initView();
         initEvents();
-        Log.d("app","GocsdkCallbackImp.hfpStatus="+ GocsdkCallbackImp.hfpStatus);
+        Log.d("app", "GocsdkCallbackImp.hfpStatus=" + GocsdkCallbackImp.hfpStatus);
 //        if (GocsdkCallbackImp.hfpStatus >= 3) {
-            showConnect();
+        showConnect();
 //        } else {
 //            showDisconnect();
 //        }
@@ -226,40 +228,9 @@ public class CallogActivity extends Activity implements View.OnClickListener{
             paddingData(lv_item, i);
             listViews.add(lv_item);
         }
-        //测试////////////////////////////////////////
-        Map<String, String> map = null;
-        map = new HashMap<String, String>();
-        String name = null;
-        name = "周杰伦";
-        map.put("itemName", name);
-        map.put("itemNum", "13560228695");
-        call_log_in.add(map);
-        mSimpleAdapterIn.notifyDataSetChanged();
-        rl_downloading.setVisibility(View.GONE);
-        vp_content.setVisibility(View.VISIBLE);
-        //
-        Map<String, String> map1 = null;
-        map1 = new HashMap<String, String>();
-        String name1 = null;
-        name1 = "范玮琪";
-        map1.put("itemName", name1);
-        map1.put("itemNum", "13565893882");
-        call_log_out.add(map1);
-        mSimpleAdapterOut.notifyDataSetChanged();
-        rl_downloading.setVisibility(View.GONE);
-        vp_content.setVisibility(View.VISIBLE);
-        //
-        Map<String, String> map2 = null;
-        map2 = new HashMap<String, String>();
-        String name2 = null;
-        name2 = "黄嘉伟";
-        map2.put("itemName", name2);
-        map2.put("itemNum", "13538380413");
-        call_log_miss.add(map2);
-        mSimpleAdapterMiss.notifyDataSetChanged();
-        rl_downloading.setVisibility(View.GONE);
-        vp_content.setVisibility(View.VISIBLE);
-        ////////////////////////////////////////
+
+//        dataTest();//数据测试，模拟通话记录
+
     }
 
     private void InitData() {
@@ -279,9 +250,9 @@ public class CallogActivity extends Activity implements View.OnClickListener{
                 tv_call_out.setTextColor(getResources().getColor(R.color.blue));
                 tv_call_miss.setTextColor(getResources().getColor(R.color.blue));
 
-                LoadIncomingData();
+                LoadIncomingData();//正式
                 ListView lv_in = listViews.get(1);
-                paddingData(lv_in, 1);
+                paddingData(lv_in, 1);//正式
                 vp_content.setCurrentItem(0, false);
                 break;
             case R.id.fl_call_out:
@@ -292,9 +263,9 @@ public class CallogActivity extends Activity implements View.OnClickListener{
                 tv_call_out.setTextColor(getResources().getColor(R.color.white));
                 tv_call_miss.setTextColor(getResources().getColor(R.color.blue));
 
-                LoadCalloutData();
+                LoadCalloutData();//正式
                 ListView lv_callout = listViews.get(1);
-                paddingData(lv_callout, 1);
+                paddingData(lv_callout, 1);//正式
                 vp_content.setCurrentItem(1, false);
                 break;
             case R.id.fl_call_miss:
@@ -305,9 +276,9 @@ public class CallogActivity extends Activity implements View.OnClickListener{
                 tv_call_out.setTextColor(getResources().getColor(R.color.blue));
                 tv_call_miss.setTextColor(getResources().getColor(R.color.white));
 
-                LoadMissedData();
+                LoadMissedData();//正式
                 ListView lv_missed = listViews.get(2);
-                paddingData(lv_missed, 2);
+                paddingData(lv_missed, 2);//正式
                 vp_content.setCurrentItem(2, false);
                 break;
         }
@@ -316,18 +287,17 @@ public class CallogActivity extends Activity implements View.OnClickListener{
     private void LoadMissedData() { //未知来电
 //        if (GocsdkCallbackImp.hfpStatus >= 3) {
 //            if (call_log_miss.size() == 0) {
-                rl_downloading.setVisibility(View.VISIBLE);
-                vp_content.setVisibility(View.GONE);
-                if (mainHandler != null) {
-                    mainHandler
-                            .sendEmptyMessage(MainActivity.MSG_UPDATE_MISSED_CALLLOG);
-                }
-                call_log_miss.clear();
-                try {
-                    MainActivity.getService().callLogstartUpdate(CALLLOG_MISS);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+        rl_downloading.setVisibility(View.VISIBLE);
+        vp_content.setVisibility(View.GONE);
+        if (mainHandler != null) {
+            mainHandler.sendEmptyMessage(MainActivity.MSG_UPDATE_MISSED_CALLLOG);
+        }
+        call_log_miss.clear();
+        try {
+            MainActivity.getService().callLogstartUpdate(CALLLOG_MISS);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 //            }
 //        }
     }
@@ -335,18 +305,17 @@ public class CallogActivity extends Activity implements View.OnClickListener{
     private void LoadCalloutData() { //去电
 //        if (GocsdkCallbackImp.hfpStatus >= 3) {
 //            if (call_log_out.size() == 0) {
-                rl_downloading.setVisibility(View.VISIBLE);
-                vp_content.setVisibility(View.GONE);
-                if (mainHandler != null) {
-                    mainHandler
-                            .sendEmptyMessage(MainActivity.MSG_UPDATE_CALLOUT_CALLLOG);
-                }
-                call_log_out.clear();
-                try {
-                    MainActivity.getService().callLogstartUpdate(CALLLOG_OUT);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+        rl_downloading.setVisibility(View.VISIBLE);
+        vp_content.setVisibility(View.GONE);
+        if (mainHandler != null) {
+            mainHandler.sendEmptyMessage(MainActivity.MSG_UPDATE_CALLOUT_CALLLOG);
+        }
+        call_log_out.clear();
+        try {
+            MainActivity.getService().callLogstartUpdate(CALLLOG_OUT);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 //            }
 //        }
     }
@@ -355,16 +324,20 @@ public class CallogActivity extends Activity implements View.OnClickListener{
 
 
 //        if (call_log_in.size() == 0) {
-            rl_downloading.setVisibility(View.VISIBLE);
-            vp_content.setVisibility(View.GONE);
-            mainHandler = MainActivity.getHandler();
+        rl_downloading.setVisibility(View.VISIBLE);
+        vp_content.setVisibility(View.GONE);
+
+
+        if (mainHandler != null) {
             mainHandler.sendEmptyMessage(MainActivity.MSG_UPDATE_INCOMING_CALLLOG);
-            call_log_in.clear();
-            try {
-                MainActivity.getService().callLogstartUpdate(CALLLOG_IN);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+        }
+
+        call_log_in.clear();
+        try {
+            MainActivity.getService().callLogstartUpdate(CALLLOG_IN);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 //        }
     }
 
@@ -402,10 +375,11 @@ public class CallogActivity extends Activity implements View.OnClickListener{
             Map<String, String> map = (Map<String, String>) mSimpleAdapter.getItem(position);
             String Name = map.get("itemName");
             final String Num = map.get("itemNum");
-            createCallOutDialog(Name,Num);
+            createCallOutDialog(Name, Num);
         }
 
     }
+
     private void createCallOutDialog(String Name, final String Num) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("确定要拨打吗?" + Name + ":" + Num);
@@ -438,9 +412,11 @@ public class CallogActivity extends Activity implements View.OnClickListener{
 
         switch (position) {
             case 0:
-                mSimpleAdapterIn = new SimpleAdapter(this, call_log_in,R.layout.call_log_in_listview_item_view, new String[] {
-                        "itemName", "itemNum", "itemTime" },
-                        new int[] { R.id.tv_in_name, R.id.tv_in_number, R.id.tv_in_time });
+                mSimpleAdapterIn = new SimpleAdapter(this,
+                        call_log_in,
+                        R.layout.call_log_in_listview_item_view,
+                        new String[]{"itemName", "itemNum", "itemTime"},
+                        new int[]{R.id.tv_in_name, R.id.tv_in_number, R.id.tv_in_time});
                 listView.setAdapter(mSimpleAdapterIn);
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -461,8 +437,8 @@ public class CallogActivity extends Activity implements View.OnClickListener{
                 mSimpleAdapterOut = new SimpleAdapter(this,
                         call_log_out,
                         R.layout.call_log_out_listview_item_view,
-                        new String[] {"itemName", "itemNum", "itemTime" },
-                        new int[] {R.id.tv_out_name, R.id.tv_out_number, R.id.tv_out_time });
+                        new String[]{"itemName", "itemNum", "itemTime"},
+                        new int[]{R.id.tv_out_name, R.id.tv_out_number, R.id.tv_out_time});
 
                 listView.setAdapter(mSimpleAdapterOut);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -470,11 +446,11 @@ public class CallogActivity extends Activity implements View.OnClickListener{
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        if (GocsdkCallbackImp.hfpStatus >= 3) {
+//                        if (GocsdkCallbackImp.hfpStatus >= 3) {
                             clickItemCall(mSimpleAdapterOut, position);
-                        } else {
-                            ToastFactory.showToast(CallogActivity.this, "请先连接设备");
-                        }
+//                        } else {
+//                            ToastFactory.showToast(CallogActivity.this, "请先连接设备");
+//                        }
 
                     }
                 });
@@ -483,8 +459,8 @@ public class CallogActivity extends Activity implements View.OnClickListener{
                 mSimpleAdapterMiss = new SimpleAdapter(this,
                         call_log_miss,
                         R.layout.call_log_miss_listview_item_view,
-                        new String[] {"itemName", "itemNum", "itemTime" },
-                        new int[] {R.id.tv_miss_name, R.id.tv_miss_number, R.id.tv_miss_time });
+                        new String[]{"itemName", "itemNum", "itemTime"},
+                        new int[]{R.id.tv_miss_name, R.id.tv_miss_number, R.id.tv_miss_time});
 
                 listView.setAdapter(mSimpleAdapterMiss);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -523,4 +499,71 @@ public class CallogActivity extends Activity implements View.OnClickListener{
             }
         }
     }
+
+
+    private void dataTest() {
+        //测试////////////////////////////////////////
+        Map<String, String> map = null;
+        map = new HashMap<String, String>();
+        String name = null;
+        name = "周杰伦";
+        map.put("itemName", name);
+        map.put("itemNum", "13560226285");
+        Map<String, String> map6 = null;
+        map6 = new HashMap<String, String>();
+        String name2 = null;
+        name2 = "中国联通";
+        map6.put("itemName", name2);
+        map6.put("itemNum", "13560226285");
+        call_log_in.add(map);
+        call_log_in.add(map6);
+        mSimpleAdapterIn.notifyDataSetChanged();
+        rl_downloading.setVisibility(View.GONE);
+        vp_content.setVisibility(View.VISIBLE);
+        //
+        Map<String, String> map1 = null;
+        map1 = new HashMap<String, String>();
+        String name1 = null;
+        name1 = "范玮琪";
+        map1.put("itemName", name1);
+        map1.put("itemNum", "13565893882");
+        Map<String, String> map7 = null;
+        map7 = new HashMap<String, String>();
+        String name7 = null;
+        name7 = "张三";
+        map7.put("itemName", name7);
+        map7.put("itemNum", "10086");
+        call_log_out.add(map1);
+        call_log_out.add(map7);
+        mSimpleAdapterOut.notifyDataSetChanged();
+        rl_downloading.setVisibility(View.GONE);
+        vp_content.setVisibility(View.VISIBLE);
+        Map<String, String> map2 = null;
+        map2 = new HashMap<String, String>();
+        String name4 = null;
+        name4 = "中国电信";
+        map2.put("itemName", name4);
+        map2.put("itemNum", "13538380413");
+        Map<String, String> map11 = null;
+        map11 = new HashMap<String, String>();
+        String name11 = null;
+        name11 = "王五";
+        map11.put("itemName", name11);
+        map11.put("itemNum", "10010");
+        Map<String, String> map12 = null;
+        map12 = new HashMap<String, String>();
+        String name12 = null;
+        name12 = "李四";
+        map12.put("itemName", name12);
+        map12.put("itemNum", "13789473827");
+        call_log_miss.add(map12);
+        call_log_miss.add(map11);
+        call_log_miss.add(map2);
+        mSimpleAdapterMiss.notifyDataSetChanged();
+        rl_downloading.setVisibility(View.GONE);
+        vp_content.setVisibility(View.VISIBLE);
+        ////////////////////////////////////////
+    }
+
+
 }
